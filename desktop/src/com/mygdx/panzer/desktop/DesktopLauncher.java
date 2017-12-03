@@ -6,7 +6,10 @@ import com.mygdx.panzer.Panzer;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
-		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new Panzer(), config);
+		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
+		cfg.title = "Panzar";
+		cfg.width = 800;
+		cfg.height = 600;
+		new LwjglApplication(new Panzer(), cfg);
 	}
 }
