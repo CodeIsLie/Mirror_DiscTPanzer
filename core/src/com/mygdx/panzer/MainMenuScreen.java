@@ -17,6 +17,7 @@ public class MainMenuScreen extends ScreenAdapter {
 
     final Panzer process;
     OrthographicCamera camera;
+
     public MainMenuScreen(final Panzer panz)
     {
         process = panz;
