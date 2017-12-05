@@ -1,10 +1,7 @@
 package com.mygdx.panzer;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -15,10 +12,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 public class MainMenuScreen extends ScreenAdapter {
 
-    final Panzer process;
+    final PanzerProject process;
     OrthographicCamera camera;
 
-    public MainMenuScreen(final Panzer panz)
+    public MainMenuScreen(final PanzerProject panz)
     {
         process = panz;
         camera = new OrthographicCamera();

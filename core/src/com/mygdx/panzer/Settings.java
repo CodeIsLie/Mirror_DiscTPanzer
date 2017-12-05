@@ -1,5 +1,6 @@
 package com.mygdx.panzer;
 
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -7,52 +8,57 @@ import com.badlogic.gdx.math.Vector2;
  */
 
  public final class Settings {
-    private Vector2 START = new Vector2(0, 0);
-    private Vector2 FINISH = new Vector2(800, 600);
-    private int SENS_ACT = 10; //дальность сенсора
-    private int MAX_SPEED = 50;
-    private double rotation = 0;
+    private static Vector2 START = new Vector2(0, 0);
+    private static Vector2 FINISH = new Vector2(800, 600);
+    private static int SENS_ACT = 10; //дальность сенсора
+    private static int MAX_SPEED = 50;
+    private static double  rotation = 0;
+    public static final int WORLD_WIDTH = 2048;
+    public static final int WORLD_HEIGHT = 1152;
+    private static TiledMap map;
 
 
-    public double getRotation() {
+    static public TiledMap getMap() {return map;}
+
+    static public void setMap(TiledMap newmap) {map = newmap;}
+
+    static public double getRotation() {
         return rotation;
     }
 
-    public void setRotation(double rotation) {
-        this.rotation = rotation;
+    static public void setRotation(double newrotation) {
+        rotation = newrotation;
     }
 
-    public int getMAX_SPEED() {
+    static public int getMAX_SPEED() {
         return MAX_SPEED;
-
     }
 
-    public void setMAX_SPEED(int MAX_SPEED) {
-        this.MAX_SPEED = MAX_SPEED;
+    static public void setMAX_SPEED(int newMAX_SPEED) {
+        MAX_SPEED = newMAX_SPEED;
     }
 
-    public Vector2 getSTART() {
-
+    static public Vector2 getSTART() {
         return START;
     }
 
-    public void setSTART(Vector2 START) {
-        this.START = START;
+    static public void setSTART(Vector2 newSTART) {
+        START = newSTART;
     }
 
-    public Vector2 getFINISH() {
+    static public Vector2 getFINISH() {
         return FINISH;
     }
 
-    public void setFINISH(Vector2 FINISH) {
-        this.FINISH = FINISH;
+    static public void setFINISH(Vector2 newFINISH) {
+        FINISH = newFINISH;
     }
 
-    public int getSENS_ACT() {
+    static public int getSENS_ACT() {
         return SENS_ACT;
     }
 
-    public void setSENS_ACT(int SENS_ACT) {
-        this.SENS_ACT = SENS_ACT;
+    static public void setSENS_ACT(int newSENS_ACT) {
+        SENS_ACT = newSENS_ACT;
     }
 }
