@@ -53,10 +53,15 @@ public class PanzerHUD {
             }
         });
 
-        table.add(startButton);
-        table.setPosition(Settings.WORLD_WIDTH - 150, 0);
-        table.setSize(100,100);
-        stage.addActor(table);
+     //   table.add(startButton);
+     //   table.setPosition(Settings.WORLD_WIDTH - 150, 0);
+     //   table.setSize(100,100);
+     //   stage.addActor(table);
+
+        startButton.setX(Settings.WORLD_WIDTH - 150);
+        startButton.setY(50);
+        stage.addActor(startButton);
+
         Gdx.input.setInputProcessor(stage);
 
 
