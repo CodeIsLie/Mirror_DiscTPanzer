@@ -4,15 +4,21 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -24,12 +30,18 @@ public class PanzerHUD {
 
     private PanzerProject game;
     private Stage stage;
-    private Label startButton;
     private Batch batch;
     private Viewport vp;
     private Camera camera;
     private TextField startCoords;
     private TextField finishCoords;
+    private Image toMenu;
+    private Image startButton;
+
+    private Texture startButtonTexture;
+    private Texture pauseButtonTexture;
+    private Texture menuButtonTexture;
+
 
     public PanzerHUD(PanzerProject game) {
         this.game = game;
@@ -41,10 +53,12 @@ public class PanzerHUD {
         vp.apply(true);
         batch = new SpriteBatch();
         this.stage = new Stage(vp, batch);
-        Table table = new Table();
-        startButton = new Label("Start", new Label.LabelStyle(new BitmapFont(), Color.BLUE));
-        startButton.setFontScale(3);
 
+        startButtonTexture = new Texture("startButton.png");
+        pauseButtonTexture = new Texture("pauseButton.png");
+        menuButtonTexture = new Texture("toMenuButton.png");
+
+        startButton = new Image(startButtonTexture);
         startButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -53,22 +67,34 @@ public class PanzerHUD {
             }
         });
 
-     //   table.add(startButton);
-     //   table.setPosition(Settings.WORLD_WIDTH - 150, 0);
-     //   table.setSize(100,100);
-     //   stage.addActor(table);
+        toMenu = new Image(menuButtonTexture);
+        //    toMenu.addListener(new InputListener() {
+        //        @Override
+        //        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+        //            switchToOpposite();
+        //            return true;
+        //        }
+        //    });
 
-        startButton.setX(Settings.WORLD_WIDTH - 150);
-        startButton.setY(50);
-        stage.addActor(startButton);
+        Table table = new Table();
+        table.setPosition(0, 0);
+        table.setSize(Settings.WORLD_WIDTH, Settings.WORLD_HEIGHT);
 
+        table.add().padRight(Settings.WORLD_WIDTH - 200);
+        table.add(toMenu);
+        table.row();
+        table.add().padBottom(Settings.WORLD_HEIGHT - 150);
+        table.row();
+        table.add().padRight(Settings.WORLD_WIDTH - 200);
+        table.add(startButton);
+
+        stage.addActor(table);
         Gdx.input.setInputProcessor(stage);
 
 
     }
 
-    public void render(float delta)
-    {
+    public void render(float delta) {
         stage.act(delta);
         stage.draw();
     }
@@ -76,11 +102,19 @@ public class PanzerHUD {
     private void switchToOpposite() {
         if (game.getProcessState() == ProcessScreen.ProcessState.PAUSE) {
             game.setProcessState(ProcessScreen.ProcessState.RUN);
-            startButton.setText("Pause");
+            startButton.setDrawable(new TextureRegionDrawable(new TextureRegion(pauseButtonTexture)));
+            startButton.setSize(pauseButtonTexture.getWidth(), pauseButtonTexture.getHeight());
         } else if (game.getProcessState() == ProcessScreen.ProcessState.RUN) {
             game.setProcessState(ProcessScreen.ProcessState.PAUSE);
-            startButton.setText("Start");
-
+            startButton.setDrawable(new TextureRegionDrawable(new TextureRegion(startButtonTexture)));
+            startButton.setSize(pauseButtonTexture.getWidth(), pauseButtonTexture.getHeight());
         }
+    }
+
+    public void dispose()
+    {
+        startButtonTexture.dispose();
+        pauseButtonTexture.dispose();
+        menuButtonTexture.dispose();
     }
 }

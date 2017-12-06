@@ -10,7 +10,7 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "PanzerProject";
 		cfg.width = 800;
-		cfg.height = 640;
+		cfg.height = 450;
 		new LwjglApplication(new PanzerProject(), cfg);
 	}
 }

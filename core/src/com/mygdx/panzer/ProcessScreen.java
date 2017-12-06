@@ -146,6 +146,7 @@ public class ProcessScreen extends ScreenAdapter {
         batch.dispose();
         panzer.dispose();
         map1.dispose();
+        hud.dispose();
     }
 }
 
