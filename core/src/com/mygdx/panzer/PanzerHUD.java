@@ -126,21 +126,22 @@ public class PanzerHUD {
         table.add(playButton);
 
         stage.addActor(table);
-
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(stage);
         multiplexer.addProcessor(new InputAdapter(){
             public boolean touchDown(int x,int y,int pointer,int button){
+                Vector2 realCoord = new Vector2(x, y);
+                vp.unproject(realCoord);
                 System.out.println("adapter : touched");
                 switch (condition) {
                     case START:
-                        System.out.println("adapter : start");
-                        game.proc.panzer.setPosition(x, y);
-                        Settings.setSTART(new Vector2(x, y));
+                        System.out.println("adapter : start at " + x + " " + y);
+                        Settings.setSTART(realCoord);
+                        game.proc.panzer.setPosition((int)realCoord.x, (int)realCoord.y);
                         break;
                     case FINISH:
-                        System.out.println("adapter : finish");
-                        Settings.setFINISH(new Vector2(x,y));
+                        System.out.println("adapter : finish at " + x + " " + y);
+                        Settings.setFINISH(realCoord);
                         break;
                     case NOTHING:
                         System.out.println("adapter : nothing");

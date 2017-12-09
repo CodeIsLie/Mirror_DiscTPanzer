@@ -55,6 +55,7 @@ public class ProcessScreen extends ScreenAdapter {
 
     @Override
     public void show() {
+        panzer = new Panzer();
         hud = new PanzerHUD(game);
         shapeRenderer = new ShapeRenderer();
         camera = new OrthographicCamera();
@@ -70,7 +71,7 @@ public class ProcessScreen extends ScreenAdapter {
         mapRenderer.setView(camera);
         buildPhysicalBodies();
 
-        panzer = new Panzer();
+
 	}
 
     @Override

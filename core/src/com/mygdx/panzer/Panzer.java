@@ -44,8 +44,7 @@ public class Panzer {
 
     public void reset()
     {
-        position.x = panzerImage.getWidth();
-        position.y = panzerImage.getHeight();
+        position = Settings.getSTART();
     }
 
 
