@@ -40,11 +40,12 @@ public class Panzer {
             position.x += PANZER_MOVEMENT;
         }
         checkForOutOfBounds();
+        System.out.println("current pos: " + position.x + " " + position.y);
     }
 
     public void reset()
     {
-        position = Settings.getSTART();
+        setPosition((int)Settings.getStartPos().x, (int)Settings.getStartPos().y);
     }
 
 
