@@ -33,15 +33,19 @@ public class PanzerHUD {
     private Batch batch;
     private Viewport vp;
     private Camera camera;
-    private TextField startCoords;
-    private TextField finishCoords;
+//    private TextField startCoords;
+//    private TextField finishCoords;
+
     private Image toMenu;
-    private Image startButton;
+    private Image playButton;
+    private Image editStartButton;
+    private Image editFinishButton;
 
-    private Texture startButtonTexture;
-    private Texture pauseButtonTexture;
+    private Texture playButtonTexture;
+    private Texture stopButtonTexture;
     private Texture menuButtonTexture;
-
+    private Texture editStartButtonTexture;
+    private Texture editFinishButtonTexture;
 
     public PanzerHUD(PanzerProject game) {
         this.game = game;
@@ -54,12 +58,14 @@ public class PanzerHUD {
         batch = new SpriteBatch();
         this.stage = new Stage(vp, batch);
 
-        startButtonTexture = new Texture("startButton.png");
-        pauseButtonTexture = new Texture("pauseButton.png");
+        playButtonTexture = new Texture("playButton.png");
+        stopButtonTexture = new Texture("stopButton.png");
         menuButtonTexture = new Texture("toMenuButton.png");
+        editFinishButtonTexture = new Texture("FinishButton.png");
+        editStartButtonTexture = new Texture("StartButton.png");
 
-        startButton = new Image(startButtonTexture);
-        startButton.addListener(new InputListener() {
+        playButton = new Image(playButtonTexture);
+        playButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 switchToOpposite();
@@ -76,22 +82,42 @@ public class PanzerHUD {
         //        }
         //    });
 
+        editStartButton = new Image(editStartButtonTexture);
+        //    toMenu.addListener(new InputListener() {
+        //        @Override
+        //        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+        //            switchToOpposite();
+        //            return true;
+        //        }
+        //    });
+
+        editFinishButton = new Image(editFinishButtonTexture);
+        //    toMenu.addListener(new InputListener() {
+        //        @Override
+        //        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+        //            switchToOpposite();
+        //            return true;
+        //        }
+        //    });
+
         Table table = new Table();
         table.setPosition(0, 0);
         table.setSize(Settings.WORLD_WIDTH, Settings.WORLD_HEIGHT);
 
-        table.add().padRight(Settings.WORLD_WIDTH - 200);
+        table.add().padRight(Settings.WORLD_WIDTH - 500);
+        table.add(editStartButton); table.add().padRight(32);
+        table.add(editFinishButton); table.add().padRight(32);
         table.add(toMenu);
         table.row();
         table.add().padBottom(Settings.WORLD_HEIGHT - 150);
         table.row();
-        table.add().padRight(Settings.WORLD_WIDTH - 200);
-        table.add(startButton);
+        table.add().padRight(Settings.WORLD_WIDTH - 500);
+        table.add().padRight(playButtonTexture.getWidth()); table.add().padRight(32);
+        table.add().padRight(playButtonTexture.getWidth()); table.add().padRight(32);
+        table.add(playButton);
 
         stage.addActor(table);
         Gdx.input.setInputProcessor(stage);
-
-
     }
 
     public void render(float delta) {
@@ -101,20 +127,24 @@ public class PanzerHUD {
 
     private void switchToOpposite() {
         if (game.getProcessState() == ProcessScreen.ProcessState.PAUSE) {
+            editStartButton.setVisible(false);
+            editFinishButton.setVisible(false);
             game.setProcessState(ProcessScreen.ProcessState.RUN);
-            startButton.setDrawable(new TextureRegionDrawable(new TextureRegion(pauseButtonTexture)));
-            startButton.setSize(pauseButtonTexture.getWidth(), pauseButtonTexture.getHeight());
+            playButton.setDrawable(new TextureRegionDrawable(new TextureRegion(stopButtonTexture)));
+            playButton.setSize(stopButtonTexture.getWidth(), stopButtonTexture.getHeight());
         } else if (game.getProcessState() == ProcessScreen.ProcessState.RUN) {
+            editStartButton.setVisible(true);
+            editFinishButton.setVisible(true);
             game.setProcessState(ProcessScreen.ProcessState.PAUSE);
-            startButton.setDrawable(new TextureRegionDrawable(new TextureRegion(startButtonTexture)));
-            startButton.setSize(pauseButtonTexture.getWidth(), pauseButtonTexture.getHeight());
+            playButton.setDrawable(new TextureRegionDrawable(new TextureRegion(playButtonTexture)));
+            playButton.setSize(stopButtonTexture.getWidth(), stopButtonTexture.getHeight());
         }
     }
 
     public void dispose()
     {
-        startButtonTexture.dispose();
-        pauseButtonTexture.dispose();
+        playButtonTexture.dispose();
+        stopButtonTexture.dispose();
         menuButtonTexture.dispose();
     }
 }
