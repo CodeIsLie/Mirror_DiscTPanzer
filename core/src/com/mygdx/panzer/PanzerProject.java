@@ -14,7 +14,7 @@ import com.badlogic.gdx.physics.box2d.Box2D;
 public class PanzerProject extends Game {
 
     private ProcessScreen.ProcessState processState;
-    private ProcessScreen proc;
+    public ProcessScreen proc;
 
 	@Override
 	public void create () {

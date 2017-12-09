@@ -1,6 +1,8 @@
 package com.mygdx.panzer;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -9,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -21,20 +24,19 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
 /**
  * Created by Влада on 05.12.2017.
  */
 
 public class PanzerHUD {
+    private enum conditions {NOTHING, START, FINISH};
+    private conditions condition = conditions.NOTHING;
 
     private PanzerProject game;
     private Stage stage;
     private Batch batch;
     private Viewport vp;
     private Camera camera;
-//    private TextField startCoords;
-//    private TextField finishCoords;
 
     private Image toMenu;
     private Image playButton;
@@ -48,6 +50,7 @@ public class PanzerHUD {
     private Texture editFinishButtonTexture;
 
     public PanzerHUD(PanzerProject game) {
+
         this.game = game;
         camera = new OrthographicCamera();
         camera.position.set(Settings.WORLD_WIDTH / 2, Settings.WORLD_HEIGHT / 2, 0);
@@ -68,37 +71,43 @@ public class PanzerHUD {
         playButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("play : clicked");
                 switchToOpposite();
                 return true;
             }
         });
 
         toMenu = new Image(menuButtonTexture);
-        //    toMenu.addListener(new InputListener() {
-        //        @Override
-        //        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-        //            switchToOpposite();
-        //            return true;
-        //        }
-        //    });
+    /*    toMenu.addListener(new InputListener() {
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    return true;
+                }
+            });*/
 
         editStartButton = new Image(editStartButtonTexture);
-        //    toMenu.addListener(new InputListener() {
-        //        @Override
-        //        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-        //            switchToOpposite();
-        //            return true;
-        //        }
-        //    });
+        editStartButton.addListener(new InputListener() {
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    System.out.println("editstart : clicked");
+                    switch (condition)
+                    {
+                        case NOTHING:
+                            condition = conditions.START;
+                        default:
+                            break;
+                    }
+                    return true;
+                }
+            });
 
         editFinishButton = new Image(editFinishButtonTexture);
-        //    toMenu.addListener(new InputListener() {
-        //        @Override
-        //        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-        //            switchToOpposite();
-        //            return true;
-        //        }
-        //    });
+     /*   editFinishButton.addListener(new InputListener() {
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    return true;
+                }
+            });*/
 
         Table table = new Table();
         table.setPosition(0, 0);
@@ -117,7 +126,31 @@ public class PanzerHUD {
         table.add(playButton);
 
         stage.addActor(table);
-        Gdx.input.setInputProcessor(stage);
+
+        InputMultiplexer multiplexer = new InputMultiplexer();
+        multiplexer.addProcessor(stage);
+        multiplexer.addProcessor(new InputAdapter(){
+            public boolean touchDown(int x,int y,int pointer,int button){
+                System.out.println("adapter : touched");
+                switch (condition) {
+                    case START:
+                        System.out.println("adapter : start");
+                        game.proc.panzer.setPosition(x, y);
+                        Settings.setSTART(new Vector2(x, y));
+                        break;
+                    case FINISH:
+                        System.out.println("adapter : finish");
+                        Settings.setFINISH(new Vector2(x,y));
+                        break;
+                    case NOTHING:
+                        System.out.println("adapter : nothing");
+                        break;
+                }
+                condition = conditions.NOTHING;
+                return true;
+            }
+        });
+        Gdx.input.setInputProcessor(multiplexer);
     }
 
     public void render(float delta) {

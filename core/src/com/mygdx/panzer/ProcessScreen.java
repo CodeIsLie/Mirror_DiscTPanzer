@@ -47,7 +47,7 @@ public class ProcessScreen extends ScreenAdapter {
     private Array<Rectangle> rectPhysObjects = new Array<>();
     private Array<Ellipse> ellipsePhysObjects = new Array<>();
 
-    private Panzer panzer;
+    public Panzer panzer;
     public ProcessScreen(PanzerProject game) {
         this.game = game;
         game.setProcessState(ProcessState.PAUSE);
