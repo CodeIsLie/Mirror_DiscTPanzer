@@ -16,6 +16,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -37,15 +38,15 @@ public class ProcessScreen extends ScreenAdapter {
     private OrthogonalTiledMapRenderer mapRenderer;
     private OrthographicCamera camera;
     private ShapeRenderer shapeRenderer;
-    private Viewport viewport;
+    private FitViewport viewport;
 
     private PanzerHUD hud;
 
     private static final int PIXELS_PER_TILE = 32;
     private static final float HALF = 0.5f;
 
-    private Array<Rectangle> rectPhysObjects = new Array<>();
-    private Array<Ellipse> ellipsePhysObjects = new Array<>();
+    public Array<Rectangle> rectPhysObjects = new Array<>();
+    public Array<Ellipse> ellipsePhysObjects = new Array<>();
 
     public Panzer panzer;
     public ProcessScreen(PanzerProject game) {
@@ -56,7 +57,7 @@ public class ProcessScreen extends ScreenAdapter {
     @Override
     public void show() {
         panzer = new Panzer();
-        hud = new PanzerHUD(game);
+
         shapeRenderer = new ShapeRenderer();
         camera = new OrthographicCamera();
         camera.position.set(Settings.WORLD_WIDTH / 2, Settings.WORLD_HEIGHT / 2, 0);
@@ -71,7 +72,7 @@ public class ProcessScreen extends ScreenAdapter {
         mapRenderer.setView(camera);
         buildPhysicalBodies();
 
-
+        hud = new PanzerHUD(game, camera, viewport, batch);
 	}
 
     @Override
@@ -90,6 +91,7 @@ public class ProcessScreen extends ScreenAdapter {
         batch.setProjectionMatrix(camera.projection);
         batch.setTransformMatrix(camera.view);
         mapRenderer.render();
+        drawDebug();
         panzer.draw(batch);
         hud.render(delta);
     }
@@ -138,6 +140,11 @@ public class ProcessScreen extends ScreenAdapter {
             EllipseMapObject ellipseMapObject = (EllipseMapObject) object;
             Ellipse ellipse = ellipseMapObject.getEllipse();
             ellipsePhysObjects.add(ellipse);
+        }
+        for (Ellipse el : ellipsePhysObjects)
+        {
+            Rectangle rec = new Rectangle(el.x, el.y, el.width, el.height);
+            rectPhysObjects.add(rec);
         }
     }
 

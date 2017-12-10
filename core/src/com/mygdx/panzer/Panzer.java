@@ -10,17 +10,24 @@ import com.badlogic.gdx.math.Vector2;
  */
 
 public class Panzer {
-    private Texture panzerImage;
+    public Texture panzerImage;
     private static final float MOVE_TIME = 0.01F;
     private static final int PANZER_MOVEMENT = 1;
     private float timer = MOVE_TIME;
     private Vector2 position = new Vector2(0,0);
+    private int deltaX = 0;
+    private int deltaY = 0;
 
     public Panzer()
     {
         panzerImage = new Texture(Gdx.files.internal("panzer.png"));
+        deltaX = panzerImage.getWidth() / 2;
+        deltaY = panzerImage.getHeight() / 2;
+        Settings.setStartPos(new Vector2(deltaX, deltaY));
+        Settings.setFinishPos(new Vector2(Settings.WORLD_WIDTH - deltaX, Settings.WORLD_HEIGHT - deltaY));
     }
 
+    //TODO: удалить выход за границы экрана
     private void checkForOutOfBounds() {
         if (position.x >= Settings.WORLD_WIDTH) {
             position.x = 0;
@@ -51,7 +58,7 @@ public class Panzer {
 
     public void draw(Batch batch){
         batch.begin();
-        batch.draw(panzerImage, position.x, position.y);
+        batch.draw(panzerImage, position.x - deltaX, position.y - deltaY);
         batch.end();
     }
 

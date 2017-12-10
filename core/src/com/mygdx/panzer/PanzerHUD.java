@@ -9,6 +9,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Ellipse;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -42,17 +47,14 @@ public class PanzerHUD {
     private Texture menuButtonTexture;
     private Texture editStartButtonTexture;
     private Texture editFinishButtonTexture;
+    private Texture finishTexture;
 
-    public PanzerHUD(PanzerProject game) {
+    public PanzerHUD(PanzerProject game, OrthographicCamera camera, FitViewport vp, Batch batch) {
 
         this.game = game;
-        camera = new OrthographicCamera();
-        camera.position.set(Settings.WORLD_WIDTH / 2, Settings.WORLD_HEIGHT / 2, 0);
-        camera.update();
-
-        vp = new FitViewport(Settings.WORLD_WIDTH, Settings.WORLD_HEIGHT, camera);
-        vp.apply(true);
-        batch = new SpriteBatch();
+        this.camera = camera;
+        this.vp = vp;
+        this.batch = batch;
         this.stage = new Stage(vp, batch);
 
         playButtonTexture = new Texture("playButton.png");
@@ -60,6 +62,7 @@ public class PanzerHUD {
         menuButtonTexture = new Texture("toMenuButton.png");
         editFinishButtonTexture = new Texture("FinishButton.png");
         editStartButtonTexture = new Texture("StartButton.png");
+        finishTexture = new Texture("finish.png");
 
         playButton = new Image(playButtonTexture);
         playButton.addListener(new InputListener() {
@@ -96,12 +99,20 @@ public class PanzerHUD {
             });
 
         editFinishButton = new Image(editFinishButtonTexture);
-     /*   editFinishButton.addListener(new InputListener() {
+        editFinishButton.addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    System.out.println("editfinish : clicked");
+                    switch (condition)
+                    {
+                        case NOTHING:
+                            condition = conditions.FINISH;
+                        default:
+                            break;
+                    }
                     return true;
                 }
-            });*/
+            });
 
         Table table = new Table();
         table.setPosition(0, 0);
@@ -120,18 +131,18 @@ public class PanzerHUD {
         table.add(playButton);
 
         stage.addActor(table);
-        InputMultiplexer multiplexer = new InputMultiplexer();
-        multiplexer.addProcessor(stage);
-        multiplexer.addProcessor(new InputAdapter(){
+       InputMultiplexer multiplexer = new InputMultiplexer();
+       multiplexer.addProcessor(stage);
+       multiplexer.addProcessor(new InputAdapter(){
             public boolean touchDown(int x,int y,int pointer,int button){
                 Vector2 realCoord = new Vector2(x, y);
                 vp.unproject(realCoord);
                 System.out.println("adapter : touched");
+                if (!inPolygons(realCoord.x,realCoord.y)){
                 switch (condition) {
                     case START:
                         System.out.println("adapter : start at " + x + " " + y);
                         Settings.setStartPos(realCoord);
-                        //game.proc.panzer.setPosition((int)realCoord.x, (int)realCoord.y);
                         break;
                     case FINISH:
                         System.out.println("adapter : finish at " + x + " " + y);
@@ -140,7 +151,7 @@ public class PanzerHUD {
                     case NOTHING:
                         System.out.println("adapter : nothing");
                         break;
-                }
+                }}
                 condition = conditions.NOTHING;
                 return true;
             }
@@ -148,7 +159,25 @@ public class PanzerHUD {
         Gdx.input.setInputProcessor(multiplexer);
     }
 
+    //TODO: overlaps rectangle!
+    private boolean inPolygons(float x, float y)
+    {
+        for (Rectangle r: game.proc.rectPhysObjects) {
+            if (r.contains(x, y))
+                return true;
+        }
+/*        for (Ellipse c: game.proc.ellipsePhysObjects){
+            if (c.contains(x, y))
+                return true;
+        }*/
+        return false;
+    }
+    
     public void render(float delta) {
+        Vector2 finishpos = Settings.getFinishPos();
+        batch.begin();
+        batch.draw(finishTexture, finishpos.x - finishTexture.getWidth() / 2, finishpos.y - finishTexture.getHeight() / 2);
+        batch.end();
         stage.act(delta);
         stage.draw();
     }
@@ -174,5 +203,7 @@ public class PanzerHUD {
         playButtonTexture.dispose();
         stopButtonTexture.dispose();
         menuButtonTexture.dispose();
+        editStartButtonTexture.dispose();
+        editFinishButtonTexture.dispose();
     }
 }

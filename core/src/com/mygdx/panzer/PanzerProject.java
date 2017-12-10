@@ -19,7 +19,7 @@ public class PanzerProject extends Game {
 	@Override
 	public void create () {
 		Box2D.init();
-		Settings.setMap(new TmxMapLoader().load("map1.tmx"));
+		Settings.setMap(new TmxMapLoader().load("debug.tmx"));
 		proc = new ProcessScreen(this);
 		setScreen(proc);
 	}
