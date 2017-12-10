@@ -159,17 +159,14 @@ public class PanzerHUD {
         Gdx.input.setInputProcessor(multiplexer);
     }
 
-    //TODO: overlaps rectangle!
     private boolean inPolygons(float x, float y)
     {
+        Rectangle panz = game.proc.panzer.panzerSprite.getBoundingRectangle();
+        Rectangle newpanz = new Rectangle(x - panz.getWidth() / 2, y - panz.getHeight() / 2, panz.getWidth(), panz.getHeight());
         for (Rectangle r: game.proc.rectPhysObjects) {
-            if (r.contains(x, y))
+            if (Intersector.overlaps(r, newpanz))
                 return true;
         }
-/*        for (Ellipse c: game.proc.ellipsePhysObjects){
-            if (c.contains(x, y))
-                return true;
-        }*/
         return false;
     }
     

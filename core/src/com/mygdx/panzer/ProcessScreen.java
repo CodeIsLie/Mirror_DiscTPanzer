@@ -91,7 +91,7 @@ public class ProcessScreen extends ScreenAdapter {
         batch.setProjectionMatrix(camera.projection);
         batch.setTransformMatrix(camera.view);
         mapRenderer.render();
-        //drawDebug();
+        drawDebug();
         panzer.draw(batch);
         hud.render(delta);
     }
@@ -99,6 +99,7 @@ public class ProcessScreen extends ScreenAdapter {
 
     //рендерим прямоугольники физических обьектов
     private void drawDebug() {
+        Rectangle r = panzer.panzerSprite.getBoundingRectangle();
         shapeRenderer.setProjectionMatrix(camera.projection);
         shapeRenderer.setTransformMatrix(camera.view);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -110,6 +111,7 @@ public class ProcessScreen extends ScreenAdapter {
             shapeRenderer.ellipse(ellipse.x, ellipse.y,
                     ellipse.width, ellipse.height);
         }
+        shapeRenderer.rect(r.x, r.y, r.getWidth(), r.getHeight());
         shapeRenderer.end();
     }
 
