@@ -3,7 +3,11 @@ package com.mygdx.panzer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+
+import java.util.Set;
 
 /**
  * Created by Влада on 05.12.2017.
@@ -17,14 +21,20 @@ public class Panzer {
     private Vector2 position = new Vector2(0,0);
     private int deltaX = 0;
     private int deltaY = 0;
+    public Sprite panzerSprite;
 
     public Panzer()
     {
         panzerImage = new Texture(Gdx.files.internal("panzer.png"));
+        panzerSprite = new Sprite(panzerImage);
         deltaX = panzerImage.getWidth() / 2;
         deltaY = panzerImage.getHeight() / 2;
-        Settings.setStartPos(new Vector2(deltaX, deltaY));
         Settings.setFinishPos(new Vector2(Settings.WORLD_WIDTH - deltaX, Settings.WORLD_HEIGHT - deltaY));
+        //Settings.setStartPos(new Vector2(deltaX, deltaY));
+        //TODO: убрать, если начальный поворот не задается
+        panzerSprite.setRotation(Settings.getRotation());
+        Rectangle p = panzerSprite.getBoundingRectangle();
+        Settings.setStartPos(new Vector2(p.getWidth() / 2, p.getHeight() / 2));
     }
 
     //TODO: удалить выход за границы экрана
@@ -47,18 +57,23 @@ public class Panzer {
             position.x += PANZER_MOVEMENT;
         }
         checkForOutOfBounds();
+        Settings.setRotation((Settings.getRotation() + 1) % 361);
+        panzerSprite.setRotation(Settings.getRotation());
         System.out.println("current pos: " + position.x + " " + position.y);
     }
 
     public void reset()
     {
+        Settings.setRotation(0);
         setPosition((int)Settings.getStartPos().x, (int)Settings.getStartPos().y);
     }
 
 
     public void draw(Batch batch){
+        panzerSprite.setRotation(Settings.getRotation());
+        panzerSprite.setCenter(position.x, position.y);
         batch.begin();
-        batch.draw(panzerImage, position.x - deltaX, position.y - deltaY);
+        panzerSprite.draw(batch);
         batch.end();
     }
 
