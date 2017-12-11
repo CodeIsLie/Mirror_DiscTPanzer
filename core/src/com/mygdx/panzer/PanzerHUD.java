@@ -48,6 +48,8 @@ public class PanzerHUD {
     private Texture editStartButtonTexture;
     private Texture editFinishButtonTexture;
     private Texture finishTexture;
+    private Texture pressedStartButtonTexture;
+    private Texture pressedFinishButtonTexture;
 
     public PanzerHUD(PanzerProject game, OrthographicCamera camera, FitViewport vp, Batch batch) {
 
@@ -63,6 +65,8 @@ public class PanzerHUD {
         editFinishButtonTexture = new Texture("FinishButton.png");
         editStartButtonTexture = new Texture("StartButton.png");
         finishTexture = new Texture("finish.png");
+        pressedFinishButtonTexture = new Texture("pressedFinishButton.png");
+        pressedStartButtonTexture = new Texture("pressedStartButton.png");
 
         playButton = new Image(playButtonTexture);
         playButton.addListener(new InputListener() {
@@ -90,6 +94,7 @@ public class PanzerHUD {
                     switch (condition)
                     {
                         case NOTHING:
+                            editStartButton.setDrawable(new TextureRegionDrawable(new TextureRegion(pressedStartButtonTexture)));
                             condition = conditions.START;
                         default:
                             break;
@@ -102,6 +107,7 @@ public class PanzerHUD {
         editFinishButton.addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    editFinishButton.setDrawable(new TextureRegionDrawable(new TextureRegion(pressedFinishButtonTexture)));
                     System.out.println("editfinish : clicked");
                     switch (condition)
                     {
@@ -138,20 +144,20 @@ public class PanzerHUD {
                 Vector2 realCoord = new Vector2(x, y);
                 vp.unproject(realCoord);
                 System.out.println("adapter : touched");
-                if (!inPolygons(realCoord.x,realCoord.y)){
-                switch (condition) {
+                                switch (condition) {
                     case START:
-                        System.out.println("adapter : start at " + x + " " + y);
-                        Settings.setStartPos(realCoord);
+                        editStartButton.setDrawable(new TextureRegionDrawable(new TextureRegion(editStartButtonTexture)));
+                        if (!panzInPolygons(realCoord.x,realCoord.y))
+                            Settings.setStartPos(realCoord);
                         break;
                     case FINISH:
-                        System.out.println("adapter : finish at " + x + " " + y);
-                        Settings.setFinishPos(realCoord);
+                        editFinishButton.setDrawable(new TextureRegionDrawable(new TextureRegion(editFinishButtonTexture)));
+                        if (!finishInPolygons(realCoord.x,realCoord.y))
+                            Settings.setFinishPos(realCoord);
                         break;
                     case NOTHING:
-                        System.out.println("adapter : nothing");
                         break;
-                }}
+                }
                 condition = conditions.NOTHING;
                 return true;
             }
@@ -159,7 +165,7 @@ public class PanzerHUD {
         Gdx.input.setInputProcessor(multiplexer);
     }
 
-    private boolean inPolygons(float x, float y)
+    private boolean panzInPolygons(float x, float y)
     {
         Rectangle panz = game.proc.panzer.panzerSprite.getBoundingRectangle();
         Rectangle newpanz = new Rectangle(x - panz.getWidth() / 2, y - panz.getHeight() / 2, panz.getWidth(), panz.getHeight());
@@ -169,7 +175,18 @@ public class PanzerHUD {
         }
         return false;
     }
-    
+
+    private boolean finishInPolygons(float x, float y)
+    {
+        Rectangle newfinish = new Rectangle(x - finishTexture.getWidth() / 2, y - finishTexture.getHeight() / 2,
+                                                finishTexture.getWidth(), finishTexture.getHeight());
+        for (Rectangle r: game.proc.rectPhysObjects) {
+            if (Intersector.overlaps(r, newfinish))
+                return true;
+        }
+        return false;
+    }
+
     public void render(float delta) {
         Vector2 finishpos = Settings.getFinishPos();
         batch.begin();
@@ -181,12 +198,14 @@ public class PanzerHUD {
 
     private void switchToOpposite() {
         if (game.getProcessState() == ProcessScreen.ProcessState.PAUSE) {
+            toMenu.setVisible(false);
             editStartButton.setVisible(false);
             editFinishButton.setVisible(false);
             game.setProcessState(ProcessScreen.ProcessState.RUN);
             playButton.setDrawable(new TextureRegionDrawable(new TextureRegion(stopButtonTexture)));
             playButton.setSize(stopButtonTexture.getWidth(), stopButtonTexture.getHeight());
         } else if (game.getProcessState() == ProcessScreen.ProcessState.RUN) {
+            toMenu.setVisible(true);
             editStartButton.setVisible(true);
             editFinishButton.setVisible(true);
             game.setProcessState(ProcessScreen.ProcessState.PAUSE);
@@ -202,5 +221,8 @@ public class PanzerHUD {
         menuButtonTexture.dispose();
         editStartButtonTexture.dispose();
         editFinishButtonTexture.dispose();
+        finishTexture.dispose();
+        pressedStartButtonTexture.dispose();
+        pressedFinishButtonTexture.dispose();
     }
 }
