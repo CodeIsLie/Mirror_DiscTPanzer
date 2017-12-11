@@ -34,7 +34,8 @@ public class ProcessScreen extends ScreenAdapter {
 
     private PanzerProject game;
     private SpriteBatch batch;
-    private TiledMap map1;
+    private MapManager mapManager;
+
     private OrthogonalTiledMapRenderer mapRenderer;
     private OrthographicCamera camera;
     private ShapeRenderer shapeRenderer;
@@ -45,33 +46,29 @@ public class ProcessScreen extends ScreenAdapter {
     private static final int PIXELS_PER_TILE = 32;
     private static final float HALF = 0.5f;
 
-    public Array<Rectangle> rectPhysObjects = new Array<>();
-    public Array<Ellipse> ellipsePhysObjects = new Array<>();
-
     public Panzer panzer;
-    public ProcessScreen(PanzerProject game) {
+
+    public ProcessScreen(PanzerProject game, String mapPath) {
         this.game = game;
+        mapManager = MapManager.getInstance();
+        Map currentMap = new Map(mapPath);
+        mapManager.setMap(currentMap);
+        shapeRenderer = new ShapeRenderer();
+        camera = new OrthographicCamera();
+        camera.position.set(Settings.WORLD_WIDTH / 2, Settings.WORLD_HEIGHT / 2, 0);
+        camera.update();
+        viewport = new FitViewport(Settings.WORLD_WIDTH, Settings.WORLD_HEIGHT, camera);
+        viewport.apply(true);
+        batch = new SpriteBatch();
         game.setProcessState(ProcessState.PAUSE);
     }
 
     @Override
     public void show() {
-        panzer = new Panzer();
-
-        shapeRenderer = new ShapeRenderer();
-        camera = new OrthographicCamera();
-        camera.position.set(Settings.WORLD_WIDTH / 2, Settings.WORLD_HEIGHT / 2, 0);
-        camera.update();
-
-        viewport = new FitViewport(Settings.WORLD_WIDTH, Settings.WORLD_HEIGHT, camera);
-        viewport.apply(true);
-
-        batch = new SpriteBatch();
-        map1 = Settings.getMap();
-        mapRenderer = new OrthogonalTiledMapRenderer(map1, batch);
+        panzer = new Panzer(Settings.getStartAngle());
+        MapManager.getInstance().setPanzer(panzer);
+        mapRenderer = new OrthogonalTiledMapRenderer(mapManager.getMap().getTiledMap(), batch);
         mapRenderer.setView(camera);
-        buildPhysicalBodies();
-
         hud = new PanzerHUD(game, camera, viewport, batch);
 	}
 
@@ -97,21 +94,28 @@ public class ProcessScreen extends ScreenAdapter {
     }
 
 
-    //рендерим прямоугольники физических обьектов
+    // рендерим прямоугольники физических обьектов
     private void drawDebug() {
         Rectangle r = panzer.panzerSprite.getBoundingRectangle();
         shapeRenderer.setProjectionMatrix(camera.projection);
         shapeRenderer.setTransformMatrix(camera.view);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        for (Rectangle rectangle: rectPhysObjects) {
+        Array<Rectangle> rectPhysObjects = mapManager.getMap().getRectPhysObjects();
+        Array<Ellipse> ellipsePhysObjects = mapManager.getMap().getEllipsePhysObjects();
+
+        for (Rectangle rectangle : rectPhysObjects) {
             shapeRenderer.rect(rectangle.x, rectangle.y,
                     rectangle.width, rectangle.height);
         }
-        for (Ellipse ellipse: ellipsePhysObjects) {
+
+        for (Ellipse ellipse : ellipsePhysObjects) {
             shapeRenderer.ellipse(ellipse.x, ellipse.y,
                     ellipse.width, ellipse.height);
         }
         shapeRenderer.rect(r.x, r.y, r.getWidth(), r.getHeight());
+        for (Sensor sensor: panzer.getSensors()) {
+            shapeRenderer.line(sensor.getSensorBegin(), sensor.getSensorEnd());
+        }
         shapeRenderer.end();
     }
 
@@ -125,37 +129,11 @@ public class ProcessScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
-	//TODO: вынеси в отдельный класс какой-нибудь, типа MapBuilder или что-то такое,
-    //TODO: пишу просто как пример того, как экспоритровать обьекты из TiledMap
-    private void buildPhysicalBodies() {
-        MapObjects objects = map1.getLayers().get("rocks").getObjects();
-        for (MapObject object : objects) {
-            //Считаем, что камень - прямоугольник (так оно и есть, но если там будут не прямоугольники, будет ошибка
-            RectangleMapObject rectangleMapObject = (RectangleMapObject) object;
-            Rectangle rectangle = rectangleMapObject.getRectangle();
-            rectPhysObjects.add(rectangle);
-        }
-
-        objects = map1.getLayers().get("trees").getObjects();
-        for (MapObject object : objects) {
-            //Считаем, что дерево - эллипс (так оно и есть, но если там будут не эллипсы, будет ошибка
-            EllipseMapObject ellipseMapObject = (EllipseMapObject) object;
-            Ellipse ellipse = ellipseMapObject.getEllipse();
-            ellipsePhysObjects.add(ellipse);
-        }
-        for (Ellipse el : ellipsePhysObjects)
-        {
-            Rectangle rec = new Rectangle(el.x, el.y, el.width, el.height);
-            rectPhysObjects.add(rec);
-        }
-    }
-
-
     @Override
     public void dispose () {
         batch.dispose();
         panzer.dispose();
-        map1.dispose();
+        mapManager.getMap().dispose();
         hud.dispose();
     }
 }

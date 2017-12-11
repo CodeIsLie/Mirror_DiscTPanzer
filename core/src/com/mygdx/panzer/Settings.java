@@ -10,9 +10,9 @@ import com.badlogic.gdx.math.Vector2;
  public final class Settings {
     private static Vector2 startPos = new Vector2(0, 0);
     private static Vector2 finishPos = new Vector2(800, 600);
-    private static int sensAct = 10; //дальность сенсора
+    private static int sensorRange = 100;
     private static int maxSpeed = 50;
-    private static int rotation = 0;
+    private static int startAngle = 0;
     public static final int WORLD_WIDTH = 2048;
     public static final int WORLD_HEIGHT = 1152;
     private static TiledMap map;
@@ -22,12 +22,12 @@ import com.badlogic.gdx.math.Vector2;
 
     static public void setMap(TiledMap newMap) {map = newMap;}
 
-    static public int getRotation() {
-        return rotation;
+    static public int getStartAngle() {
+        return startAngle;
     }
 
-    static public void setRotation(int newRotation) {
-        rotation = newRotation;
+    static public void setStartAngle(int newRotation) {
+        startAngle = newRotation;
     }
 
     static public int getMaxSpeed() {
@@ -55,11 +55,11 @@ import com.badlogic.gdx.math.Vector2;
         finishPos = newFinish;
     }
 
-    static public int getSensAct() {
-        return sensAct;
+    static public int getSensorRange() {
+        return sensorRange;
     }
 
-    static public void setSensAct(int newSensAct) {
-        sensAct = newSensAct;
+    static public void setSensorRange(int newSensAct) {
+        sensorRange = newSensAct;
     }
 }

@@ -30,6 +30,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public class PanzerHUD {
     private enum conditions {NOTHING, START, FINISH};
     private conditions condition = conditions.NOTHING;
+    private MapManager mapManager;
 
     private PanzerProject game;
     private Stage stage;
@@ -52,7 +53,7 @@ public class PanzerHUD {
     private Texture pressedFinishButtonTexture;
 
     public PanzerHUD(PanzerProject game, OrthographicCamera camera, FitViewport vp, Batch batch) {
-
+        mapManager = MapManager.getInstance();
         this.game = game;
         this.camera = camera;
         this.vp = vp;
@@ -169,7 +170,7 @@ public class PanzerHUD {
     {
         Rectangle panz = game.proc.panzer.panzerSprite.getBoundingRectangle();
         Rectangle newpanz = new Rectangle(x - panz.getWidth() / 2, y - panz.getHeight() / 2, panz.getWidth(), panz.getHeight());
-        for (Rectangle r: game.proc.rectPhysObjects) {
+        for (Rectangle r: mapManager.getMap().getRectPhysObjects()) {
             if (Intersector.overlaps(r, newpanz))
                 return true;
         }
@@ -180,7 +181,7 @@ public class PanzerHUD {
     {
         Rectangle newfinish = new Rectangle(x - finishTexture.getWidth() / 2, y - finishTexture.getHeight() / 2,
                                                 finishTexture.getWidth(), finishTexture.getHeight());
-        for (Rectangle r: game.proc.rectPhysObjects) {
+        for (Rectangle r: mapManager.getMap().getRectPhysObjects()) {
             if (Intersector.overlaps(r, newfinish))
                 return true;
         }
