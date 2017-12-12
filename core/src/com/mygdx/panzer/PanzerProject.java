@@ -21,7 +21,7 @@ public class PanzerProject extends Game {
 		Box2D.init();
 		//proc = new ProcessScreen(this, MapManager.DEBUG_MAP_PATH);
         proc = new ProcessScreen(this, "grassmap.tmx");
-        setScreen(proc);
+        setScreen(new MainMenuScreen(this));
 	}
 
     public ProcessScreen.ProcessState getProcessState() {
@@ -30,5 +30,10 @@ public class PanzerProject extends Game {
 
     public void setProcessState(ProcessScreen.ProcessState processState) {
         this.processState = processState;
+    }
+
+    public void setProcess()
+    {
+        setScreen(proc);
     }
 }

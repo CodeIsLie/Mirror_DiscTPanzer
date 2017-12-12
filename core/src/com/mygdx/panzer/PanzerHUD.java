@@ -51,7 +51,7 @@ public class PanzerHUD {
     private Texture pressedStartButtonTexture;
     private Texture pressedFinishButtonTexture;
 
-    public PanzerHUD(PanzerProject game, OrthographicCamera camera, FitViewport vp, Batch batch) {
+    public PanzerHUD(final PanzerProject game, OrthographicCamera camera, FitViewport vp, Batch batch) {
         mapManager = MapManager.getInstance();
         this.game = game;
         this.camera = camera;
@@ -79,12 +79,13 @@ public class PanzerHUD {
         });
 
         toMenu = new Image(menuButtonTexture);
-    /*    toMenu.addListener(new InputListener() {
+        toMenu.addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    game.setScreen(new MainMenuScreen(game));
                     return true;
                 }
-            });*/
+            });
 
         editStartButton = new Image(editStartButtonTexture);
         editStartButton.addListener(new InputListener() {
