@@ -19,8 +19,9 @@ public class PanzerProject extends Game {
 	@Override
 	public void create () {
 		Box2D.init();
-		proc = new ProcessScreen(this, MapManager.DEBUG_MAP_PATH);
-		setScreen(proc);
+		//proc = new ProcessScreen(this, MapManager.DEBUG_MAP_PATH);
+        proc = new ProcessScreen(this, "grassmap.tmx");
+        setScreen(proc);
 	}
 
     public ProcessScreen.ProcessState getProcessState() {

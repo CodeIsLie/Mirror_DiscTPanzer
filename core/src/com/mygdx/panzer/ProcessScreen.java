@@ -15,6 +15,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Ellipse;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -101,18 +102,25 @@ public class ProcessScreen extends ScreenAdapter {
         shapeRenderer.setTransformMatrix(camera.view);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         Array<Rectangle> rectPhysObjects = mapManager.getMap().getRectPhysObjects();
-        Array<Ellipse> ellipsePhysObjects = mapManager.getMap().getEllipsePhysObjects();
+        //Array<Ellipse> ellipsePhysObjects = mapManager.getMap().getEllipsePhysObjects();
+        Array<Polygon> polygonPhysObjects = mapManager.getMap().getPolygonPhysObjects();
 
         for (Rectangle rectangle : rectPhysObjects) {
             shapeRenderer.rect(rectangle.x, rectangle.y,
                     rectangle.width, rectangle.height);
         }
 
-        for (Ellipse ellipse : ellipsePhysObjects) {
+        /*for (Ellipse ellipse : ellipsePhysObjects) {
             shapeRenderer.ellipse(ellipse.x, ellipse.y,
                     ellipse.width, ellipse.height);
-        }
+        }*/
+
+
+        for (Polygon polygon : polygonPhysObjects) {
+            shapeRenderer.polygon(polygon.getVertices());}
+
         shapeRenderer.rect(r.x, r.y, r.getWidth(), r.getHeight());
+
         for (Sensor sensor: panzer.getSensors()) {
             shapeRenderer.line(sensor.getSensorBegin(), sensor.getSensorEnd());
         }
