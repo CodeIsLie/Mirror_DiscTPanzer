@@ -173,6 +173,14 @@ public class PanzerHUD {
             if (Intersector.overlaps(r, newpanz))
                 return true;
         }
+
+        float[] vertices = {newpanz.x, newpanz.y, newpanz.x + newpanz.width, newpanz.y,
+                newpanz.x + newpanz.width, newpanz.y + newpanz.height, newpanz.x, newpanz.y + newpanz.height};
+        Polygon npp = new Polygon(vertices);
+        for (Polygon p:mapManager.getMap().getPolygonPhysObjects()){
+            if (Intersector.overlapConvexPolygons(p, npp))
+                return true;
+        }
         return false;
     }
 
@@ -184,8 +192,16 @@ public class PanzerHUD {
             if (Intersector.overlaps(r, newfinish))
                 return true;
         }
+
+        float[] vertices = {newfinish.x, newfinish.y, newfinish.x + newfinish.width, newfinish.y,
+                newfinish.x + newfinish.width, newfinish.y + newfinish.height, newfinish.x, newfinish.y + newfinish.height};
+        Polygon npp = new Polygon(vertices);
+        for (Polygon p:mapManager.getMap().getPolygonPhysObjects()){
+            if (Intersector.overlapConvexPolygons(p, npp))
+                return true;
+        }
         return false;
-    }
+        }
 
     public void render(float delta) {
         Vector2 finishpos = Settings.getFinishPos();
