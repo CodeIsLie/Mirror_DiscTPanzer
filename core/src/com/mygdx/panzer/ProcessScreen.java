@@ -102,7 +102,6 @@ public class ProcessScreen extends ScreenAdapter {
         shapeRenderer.setTransformMatrix(camera.view);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         Array<Rectangle> rectPhysObjects = mapManager.getMap().getRectPhysObjects();
-        //Array<Ellipse> ellipsePhysObjects = mapManager.getMap().getEllipsePhysObjects();
         Array<Polygon> polygonPhysObjects = mapManager.getMap().getPolygonPhysObjects();
 
         for (Rectangle rectangle : rectPhysObjects) {
@@ -110,14 +109,9 @@ public class ProcessScreen extends ScreenAdapter {
                     rectangle.width, rectangle.height);
         }
 
-        /*for (Ellipse ellipse : ellipsePhysObjects) {
-            shapeRenderer.ellipse(ellipse.x, ellipse.y,
-                    ellipse.width, ellipse.height);
-        }*/
-
-
         for (Polygon polygon : polygonPhysObjects) {
-            shapeRenderer.polygon(polygon.getVertices());}
+            shapeRenderer.polygon(polygon.getTransformedVertices());
+        }
 
         shapeRenderer.rect(r.x, r.y, r.getWidth(), r.getHeight());
 

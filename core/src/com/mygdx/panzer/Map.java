@@ -1,6 +1,7 @@
 package com.mygdx.panzer;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.EllipseMapObject;
@@ -20,7 +21,6 @@ public class Map {
     private TiledMap tiledMap;
 
     private Array<Rectangle> rectPhysObjects = new Array<>();
-    private Array<Ellipse> ellipsePhysObjects = new Array<>();
     private Array<Polygon> polPhysObject = new Array<>();
 
     public Map(String mapPath) {
@@ -30,10 +30,6 @@ public class Map {
 
     public Array<Rectangle> getRectPhysObjects() {
         return rectPhysObjects;
-    }
-
-    public Array<Ellipse> getEllipsePhysObjects() {
-        return ellipsePhysObjects;
     }
     public Array<Polygon> getPolygonPhysObjects() {
         return polPhysObject;
@@ -49,22 +45,11 @@ public class Map {
         }
 
         objects = tiledMap.getLayers().get("trees").getObjects();
-        /*for (MapObject object : objects) {
-            //Считаем, что дерево - эллипс (так оно и есть, но если там будут не эллипсы, будет ошибка
-            EllipseMapObject ellipseMapObject = (EllipseMapObject) object;
-            Ellipse ellipse = ellipseMapObject.getEllipse();
-            ellipsePhysObjects.add(ellipse);
-        }
-        for (Ellipse el : ellipsePhysObjects)
-        {
-            Rectangle rec = new Rectangle(el.x, el.y, el.width, el.height);
-            rectPhysObjects.add(rec);
-        }*/
 
         for (MapObject object : objects) {
             //Считаем, что дерево - polygon
-            PolygonMapObject polygoneMapObject = (PolygonMapObject) object;
-            Polygon polygon = polygoneMapObject.getPolygon();
+            PolygonMapObject polygonMapObject = (PolygonMapObject) object;
+            Polygon polygon = polygonMapObject.getPolygon();
             polPhysObject.add(polygon);
         }
 
