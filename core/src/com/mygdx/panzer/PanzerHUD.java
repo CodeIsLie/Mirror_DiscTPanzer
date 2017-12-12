@@ -35,7 +35,6 @@ public class PanzerHUD {
     private PanzerProject game;
     private Stage stage;
     private Batch batch;
-    private Viewport vp;
     private Camera camera;
 
     private Image toMenu;
@@ -56,7 +55,7 @@ public class PanzerHUD {
         mapManager = MapManager.getInstance();
         this.game = game;
         this.camera = camera;
-        this.vp = vp;
+        final Viewport nvp = vp;
         this.batch = batch;
         this.stage = new Stage(vp, batch);
 
@@ -143,7 +142,7 @@ public class PanzerHUD {
        multiplexer.addProcessor(new InputAdapter(){
             public boolean touchDown(int x,int y,int pointer,int button){
                 Vector2 realCoord = new Vector2(x, y);
-                vp.unproject(realCoord);
+                nvp.unproject(realCoord);
                 System.out.println("adapter : touched");
                                 switch (condition) {
                     case START:
