@@ -81,6 +81,9 @@ public class ProcessScreen extends ScreenAdapter {
                 break;
             case PAUSE:
                 panzer.reset();
+                for (Sensor sensor: panzer.getSensors()) {
+                    sensor.reset();
+                }
                 break;
             default:
                 break;
@@ -90,6 +93,7 @@ public class ProcessScreen extends ScreenAdapter {
         batch.setTransformMatrix(camera.view);
         mapRenderer.render();
         drawDebug();
+        drawSensors();
         panzer.draw(batch);
         hud.render(delta);
     }
@@ -101,20 +105,19 @@ public class ProcessScreen extends ScreenAdapter {
         shapeRenderer.setProjectionMatrix(camera.projection);
         shapeRenderer.setTransformMatrix(camera.view);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        Array<Rectangle> rectPhysObjects = mapManager.getMap().getRectPhysObjects();
         Array<Polygon> polygonPhysObjects = mapManager.getMap().getPolygonPhysObjects();
-
-        for (Rectangle rectangle : rectPhysObjects) {
-            shapeRenderer.rect(rectangle.x, rectangle.y,
-                    rectangle.width, rectangle.height);
-        }
 
         for (Polygon polygon : polygonPhysObjects) {
             shapeRenderer.polygon(polygon.getTransformedVertices());
         }
 
         shapeRenderer.rect(r.x, r.y, r.getWidth(), r.getHeight());
+        shapeRenderer.end();
+    }
 
+    private void drawSensors()
+    {
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         for (Sensor sensor: panzer.getSensors()) {
             shapeRenderer.line(sensor.getSensorBegin(), sensor.getSensorEnd());
         }

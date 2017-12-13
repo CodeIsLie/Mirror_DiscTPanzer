@@ -9,8 +9,8 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "PanzerProject";
-		cfg.width = 800;
-		cfg.height = 450;
+		cfg.width = 960;
+		cfg.height = 540;
 		new LwjglApplication(new PanzerProject(), cfg);
 	}
 }

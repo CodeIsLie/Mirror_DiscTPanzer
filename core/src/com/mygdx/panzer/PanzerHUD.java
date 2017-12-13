@@ -170,11 +170,6 @@ public class PanzerHUD {
     {
         Rectangle panz = game.proc.panzer.panzerSprite.getBoundingRectangle();
         Rectangle newpanz = new Rectangle(x - panz.getWidth() / 2, y - panz.getHeight() / 2, panz.getWidth(), panz.getHeight());
-        for (Rectangle r: mapManager.getMap().getRectPhysObjects()) {
-            if (Intersector.overlaps(r, newpanz))
-                return true;
-        }
-
         float[] vertices = {newpanz.x, newpanz.y, newpanz.x + newpanz.width, newpanz.y,
                 newpanz.x + newpanz.width, newpanz.y + newpanz.height, newpanz.x, newpanz.y + newpanz.height};
         Polygon npp = new Polygon(vertices);
@@ -189,11 +184,6 @@ public class PanzerHUD {
     {
         Rectangle newfinish = new Rectangle(x - finishTexture.getWidth() / 2, y - finishTexture.getHeight() / 2,
                                                 finishTexture.getWidth(), finishTexture.getHeight());
-        for (Rectangle r: mapManager.getMap().getRectPhysObjects()) {
-            if (Intersector.overlaps(r, newfinish))
-                return true;
-        }
-
         float[] vertices = {newfinish.x, newfinish.y, newfinish.x + newfinish.width, newfinish.y,
                 newfinish.x + newfinish.width, newfinish.y + newfinish.height, newfinish.x, newfinish.y + newfinish.height};
         Polygon npp = new Polygon(vertices);

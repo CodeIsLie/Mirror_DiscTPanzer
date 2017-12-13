@@ -76,6 +76,18 @@ public class Sensor {
         debugMessage();
     }
 
+    public void reset(){
+        Panzer panzer = mapManager.getPanzer();
+        float panzer_angle = panzer.getAngle();
+        panzer_angle *= Math.PI / 180;
+        float sum_angle = panzer_angle + angle;
+        position = panzer.getPosition();
+        double x = maxRange * Math.cos(sum_angle);
+        double y = maxRange * Math.sin(sum_angle);
+        sensorBegin = new Vector2(position);
+        sensorEnd = new Vector2((float)(x + sensorBegin.x), (float)y + (sensorBegin.y));
+    }
+
     private float calculateRange(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4) {
         float range = Float.MAX_VALUE;
         Vector2 intersection = new Vector2();

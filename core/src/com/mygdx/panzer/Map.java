@@ -20,7 +20,6 @@ public class Map {
 
     private TiledMap tiledMap;
 
-    private Array<Rectangle> rectPhysObjects = new Array<>();
     private Array<Polygon> polPhysObject = new Array<>();
 
     public Map(String mapPath) {
@@ -28,26 +27,13 @@ public class Map {
         buildPhysicalBodies();
     }
 
-    public Array<Rectangle> getRectPhysObjects() {
-        return rectPhysObjects;
-    }
     public Array<Polygon> getPolygonPhysObjects() {
         return polPhysObject;
     }
 
     private void buildPhysicalBodies() {
-        MapObjects objects = tiledMap.getLayers().get("rocks").getObjects();
+        MapObjects objects = tiledMap.getLayers().get("obstacles").getObjects();
         for (MapObject object : objects) {
-            //Считаем, что камень - прямоугольник (так оно и есть, но если там будут не прямоугольники, будет ошибка
-            RectangleMapObject rectangleMapObject = (RectangleMapObject) object;
-            Rectangle rectangle = rectangleMapObject.getRectangle();
-            rectPhysObjects.add(rectangle);
-        }
-
-        objects = tiledMap.getLayers().get("trees").getObjects();
-
-        for (MapObject object : objects) {
-            //Считаем, что дерево - polygon
             PolygonMapObject polygonMapObject = (PolygonMapObject) object;
             Polygon polygon = polygonMapObject.getPolygon();
             polPhysObject.add(polygon);
