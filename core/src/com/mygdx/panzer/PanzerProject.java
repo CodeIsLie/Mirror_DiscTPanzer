@@ -20,7 +20,7 @@ public class PanzerProject extends Game {
 	public void create () {
 		Box2D.init();
 		//proc = new ProcessScreen(this, MapManager.DEBUG_MAP_PATH);
-        proc = new ProcessScreen(this, "grassmap.tmx");
+        proc = new ProcessScreen(this, "lavamap.tmx");
         setScreen(new MainMenuScreen(this));
 	}
 

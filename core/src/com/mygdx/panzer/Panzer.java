@@ -40,14 +40,14 @@ public class Panzer {
         panzerSprite.setRotation(startAngle);
         Rectangle p = panzerSprite.getBoundingRectangle();
         Settings.setStartPos(new Vector2(p.getWidth() / 2, p.getHeight() / 2));
-        /*for (int i = 0, sensorAngle = 15; i < SENSOR_COUNT; ++i, sensorAngle-=15) {
-            Sensor sensor = new Sensor(Settings.getSensorRange(), sensorAngle);
+        for (int i = 0, sensorAngle = 45; i < SENSOR_COUNT; ++i, sensorAngle-=45) {
+            Sensor sensor = new Sensor(Settings.getSensorRange() + (int)panzerSprite.getWidth() / 2, sensorAngle);
             sensor.setDebugTag("SENSOR" + i);
             sensors.add(sensor);
-        }*/
-        Sensor sensor = new Sensor(Settings.getSensorRange(), 0);
+        }
+        /*Sensor sensor = new Sensor(Settings.getSensorRange(), 0);
         sensor.setDebugTag("SENSOR1");
-        sensors.add(sensor);
+        sensors.add(sensor);*/
     }
 
     //TODO: удалить выход за границы экрана

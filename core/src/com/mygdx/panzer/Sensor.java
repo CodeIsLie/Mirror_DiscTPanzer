@@ -31,69 +31,62 @@ public class Sensor {
     public Sensor(int maxRange, float angle) {
         this.maxRange = maxRange;
         this.angle = angle;
+        this.angle *= Math.PI / 180;
     }
 
     public void update(float delta) {
         Panzer panzer = mapManager.getPanzer();
-        angle = panzer.getAngle();
+        float panzer_angle = panzer.getAngle();
         // Переводим в радианы
-        angle *= Math.PI / 180;
+        panzer_angle *= Math.PI / 180;
+        float sum_angle = panzer_angle + angle;
         position = panzer.getPosition();
-        double x = maxRange * Math.cos(angle);
-        double y = maxRange * Math.sin(angle);
+        double x = maxRange * Math.cos(sum_angle);
+        double y = maxRange * Math.sin(sum_angle);
         sensorBegin = new Vector2(position);
-        //TODO: Добавить в класс танка размер, а то это дичь какая то
 
         sensorEnd = new Vector2((float)(x + sensorBegin.x), (float)y + (sensorBegin.y));
-        Array<Rectangle> rectObjects = mapManager.getMap().getRectPhysObjects();
+        Array<Polygon> polygons = mapManager.getMap().getPolygonPhysObjects();
         float minRange = Float.MAX_VALUE;
-        for (Rectangle rectangle: rectObjects) {
-            Vector2 p1 = new Vector2(rectangle.x, rectangle.y);
-            Vector2 p2 = new Vector2(rectangle.x, rectangle.y + rectangle.height);
-            Vector2 p3 = new Vector2(rectangle.x + rectangle.width, rectangle.y + rectangle.height);
-            Vector2 p4 = new Vector2(rectangle.x + rectangle.width, rectangle.y);
+        for (Polygon polygon: polygons) {
+            float[] vertices = polygon.getTransformedVertices();
+            for (int i = 0; i < vertices.length - 3; i+=2) {
+                Vector2 p1 = new Vector2(vertices[i], vertices[i+1]);
+                Vector2 p2 = new Vector2(vertices[i+2], vertices[i+3]);
+                float currentRange = calculateRange(sensorBegin, sensorEnd, p1, p2);
+                if (currentRange < minRange) {
+                    minRange = currentRange;
+                }
+            }
+            // Последнюю вершину с первой
+            Vector2 p1 = new Vector2(vertices[vertices.length - 2], vertices[vertices.length - 1]);
+            Vector2 p2 = new Vector2(vertices[0], vertices[1]);
             float currentRange = calculateRange(sensorBegin, sensorEnd, p1, p2);
             if (currentRange < minRange) {
-                minRange =  currentRange;
-            }
-            currentRange = calculateRange(sensorBegin, sensorEnd, p2, p3);
-            if (currentRange < minRange) {
-                minRange =  currentRange;
-            }
-            currentRange = calculateRange(sensorBegin, sensorEnd, p3, p4);
-            if (currentRange < minRange) {
-                minRange =  currentRange;
-            }
-            currentRange = calculateRange(sensorBegin, sensorEnd, p1, p4);
-            if (currentRange < minRange) {
-                minRange =  currentRange;
+                minRange = currentRange;
             }
         }
         if (minRange < maxRange) {
             seeing = Seeing.OBJECT;
-            System.out.println("Sensor " + debugTag + " just found object in " + (minRange - panzer.panzerSprite.getWidth() / 2) + " pixels!");
         } else {
             seeing = Seeing.NOTHING;
-            System.out.println("Sensor found nothing...");
         }
         range = (int)minRange;
         range -= panzer.panzerSprite.getWidth() / 2;
+        debugMessage();
     }
 
     private float calculateRange(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4) {
         float range = Float.MAX_VALUE;
         Vector2 intersection = new Vector2();
         if (Intersector.intersectLines(p1, p2, p3, p4, intersection)) {
-            if (    Intersector.pointLineSide(intersection, p1, p2) == 0 &&
-                    Intersector.pointLineSide(intersection, p3, p4) == 0 &&
-                    (intersection.x - p1.x)*(intersection.x - p2.x) <= 0 &&
+            if (   (intersection.x - p1.x)*(intersection.x - p2.x) <= 0 &&
                     (intersection.x - p3.x)*(intersection.x - p4.x) <= 0 &&
                     (intersection.y - p1.y)*(intersection.y - p2.y) <= 0 &&
                     (intersection.y - p3.y)*(intersection.y - p4.y) <= 0) {
                 range = (float) Math.sqrt
-                        (
-                                (intersection.x - p1.x) * (intersection.x - p1.x) +
-                                        (intersection.y - p1.y) * (intersection.y - p1.y)
+                        ((intersection.x - p1.x) * (intersection.x - p1.x) +
+                                (intersection.y - p1.y) * (intersection.y - p1.y)
                         );
             }
         }
@@ -110,5 +103,13 @@ public class Sensor {
 
     public Vector2 getSensorEnd() {
         return sensorEnd;
+    }
+
+    private void debugMessage() {
+        if (seeing == Seeing.OBJECT) {
+            System.out.println("Sensor " + debugTag + " just found object in " + range + " pixels!");
+        } else {
+            System.out.println("Sensor " + debugTag + " found nothing...");
+        }
     }
 }
