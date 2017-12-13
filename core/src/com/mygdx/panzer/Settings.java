@@ -16,7 +16,15 @@ import com.badlogic.gdx.math.Vector2;
     public static final int WORLD_WIDTH = 2048;
     public static final int WORLD_HEIGHT = 1152;
     private static TiledMap map;
+    private static boolean drawsensors = true;
 
+    public static boolean isDrawsensors() {
+        return drawsensors;
+    }
+
+    public static void setDrawsensors(boolean drawsensors) {
+        Settings.drawsensors = drawsensors;
+    }
 
     static public TiledMap getMap() {return map;}
 

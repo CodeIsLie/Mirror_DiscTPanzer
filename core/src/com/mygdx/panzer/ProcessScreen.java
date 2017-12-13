@@ -92,8 +92,9 @@ public class ProcessScreen extends ScreenAdapter {
         batch.setProjectionMatrix(camera.projection);
         batch.setTransformMatrix(camera.view);
         mapRenderer.render();
-        //drawDebug();
-        drawSensors();
+        drawDebug();
+        if (Settings.isDrawsensors())
+            drawSensors();
         panzer.draw(batch);
         hud.render(delta);
     }
