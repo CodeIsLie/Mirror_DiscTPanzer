@@ -92,7 +92,7 @@ public class ProcessScreen extends ScreenAdapter {
         batch.setProjectionMatrix(camera.projection);
         batch.setTransformMatrix(camera.view);
         mapRenderer.render();
-        drawDebug();
+        //drawDebug();
         drawSensors();
         panzer.draw(batch);
         hud.render(delta);
@@ -117,6 +117,8 @@ public class ProcessScreen extends ScreenAdapter {
 
     private void drawSensors()
     {
+        shapeRenderer.setProjectionMatrix(camera.projection);
+        shapeRenderer.setTransformMatrix(camera.view);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         for (Sensor sensor: panzer.getSensors()) {
             shapeRenderer.line(sensor.getSensorBegin(), sensor.getSensorEnd());
