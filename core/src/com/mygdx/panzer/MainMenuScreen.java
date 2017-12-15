@@ -83,8 +83,7 @@ public class MainMenuScreen extends ScreenAdapter {
         sensorField = new TextField("500", skin);
         angleField = new TextField("0", skin);
 
-        //TODO: вынести в класс карт
-        String[] maps = new String[] {"grassmap", "lavamap"};
+        String[] maps = MapManager.getInstance().getMaps();
         mapField = new SelectBox(skin);
         mapField.setItems(maps);
         labelTexture = new Texture("label.png");

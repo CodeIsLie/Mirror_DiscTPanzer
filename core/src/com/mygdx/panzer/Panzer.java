@@ -13,22 +13,22 @@ import com.badlogic.gdx.utils.Array;
  */
 
 public class Panzer {
-    public Texture panzerImage;
+
+
     private static final int SENSOR_COUNT = 3;
-    private static final float MOVE_TIME = 0.01F;
-    private static final int PANZER_MOVEMENT = 1;
-    private float timer = MOVE_TIME;
+
     private Vector2 position = new Vector2(0,0);
     private int deltaX = 0;
     private int deltaY = 0;
+    // В градусах
     private float angle = 0;
 
     public Sprite panzerSprite;
+    private Texture panzerImage;
 
     private Array<Sensor> sensors = new Array<>();
 
-    public Panzer(float startAngle)
-    {
+    public Panzer(float startAngle) {
         this.angle = startAngle;
         panzerImage = new Texture(Gdx.files.internal("panzer.png"));
         panzerSprite = new Sprite(panzerImage);
@@ -57,18 +57,15 @@ public class Panzer {
         }
     }
 
-    public void setPosition(int x, int y)
-    {
+    public void setPosition(int x, int y) {
        position.x = x;
        position.y = y;
     }
 
     public void updatePosition(float delta) {
-        timer -= delta;
-        if (timer <= 0) {
-            timer = MOVE_TIME;
-            position.x += PANZER_MOVEMENT;
-        }
+        // Скорость - условные единицы в секунду
+        // Пустим танк по кругу!
+        calculateMotion(50 * (delta / 1),100 * (delta / 1));
         for (Sensor sensor: sensors) {
             sensor.update(delta);
         }
@@ -77,8 +74,33 @@ public class Panzer {
         //System.out.println("current pos: " + position.x + " " + position.y);
     }
 
-    public void reset()
-    {
+    // Поворачивает и передвигает танк, основываясь на передвижении (не мощности) левой и правой гусеницы.
+    private void calculateMotion(float leftMovement, float rightMovement) {
+        float weightDiff = leftMovement - rightMovement;
+        if (weightDiff == 0) {
+            moveStraight(leftMovement);
+            return;
+        }
+        boolean isRightRotation = weightDiff > 0;
+        float sectorLength = Math.abs(weightDiff);
+        float straightMovement = Math.min(leftMovement, rightMovement);
+        moveStraight(straightMovement);
+        double rotationAngle = (180 * sectorLength) / (panzerSprite.getHeight() * Math.PI);
+        angle = isRightRotation ? angle - (float)rotationAngle : angle + (float)rotationAngle;
+        float movementRemainder = (float) Math.sin(rotationAngle * (Math.PI / 180)) * (panzerSprite.getHeight() / 2);
+        moveStraight(movementRemainder);
+    }
+
+    private void moveStraight(float distance){
+        // Переводим в радианы
+        double curr_angle = angle * (Math.PI / 180);
+        double x = distance * Math.cos(curr_angle);
+        double y = distance * Math.sin(curr_angle);
+        Vector2 new_position = new Vector2((float)(x + position.x), (float)y + (position.y));
+        position.x = new_position.x;
+        position.y = new_position.y;
+    }
+    public void reset() {
         angle = Settings.getStartAngle();
         setPosition((int)Settings.getStartPos().x, (int)Settings.getStartPos().y);
     }
@@ -92,8 +114,7 @@ public class Panzer {
         batch.end();
     }
 
-    public void dispose()
-    {
+    public void dispose() {
         panzerImage.dispose();
     }
 

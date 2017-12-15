@@ -8,6 +8,7 @@ public class MapManager  {
 
     private static MapManager instance = new MapManager();
 
+    private String[] maps = new String[] {"grassmap", "lavamap"};
     private Panzer panzer;
 
     public static MapManager getInstance() {
@@ -30,5 +31,9 @@ public class MapManager  {
 
     public void setPanzer(Panzer panzer) {
         this.panzer = panzer;
+    }
+
+    public String[] getMaps() {
+        return maps;
     }
 }
