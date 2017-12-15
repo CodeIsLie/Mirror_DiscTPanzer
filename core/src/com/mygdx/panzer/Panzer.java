@@ -28,6 +28,8 @@ public class Panzer {
 
     private Array<Sensor> sensors = new Array<>();
 
+    private RuleSet ruleSet;
+
     public Panzer(float startAngle) {
         this.angle = startAngle;
         panzerImage = new Texture(Gdx.files.internal("panzer.png"));
@@ -48,6 +50,8 @@ public class Panzer {
         /*Sensor sensor = new Sensor(Settings.getSensorRange(), 0);
         sensor.setDebugTag("SENSOR1");
         sensors.add(sensor);*/
+
+        ruleSet = new RuleSet(RuleSet.getRules());
     }
 
     //TODO: удалить выход за границы экрана
@@ -64,6 +68,13 @@ public class Panzer {
 
     public void updatePosition(float delta) {
         // Скорость - условные единицы в секунду
+        Array<Double> powers = ruleSet.apply(sensors);
+        double leftMove = powers.get(0);
+        double rightMove = powers.get(1);
+
+        //System.out.println("левое значение " + leftMove + " правое значение " + rightMove);
+        // TODO: сделать инициализацию всех нечётких функций и правил, после этого можно использовать leftMove и rightMove
+
         // Пустим танк по кругу!
         calculateMotion(50 * (delta / 1),100 * (delta / 1));
         for (Sensor sensor: sensors) {
