@@ -18,6 +18,6 @@ FuzzyFunction fuzzyFun1 = new FuzzyFunction(){
             }
         };
  */
-public interface FuzzyFunction {
+public abstract class FuzzyFunction {
     abstract public double fun(double x);
 }

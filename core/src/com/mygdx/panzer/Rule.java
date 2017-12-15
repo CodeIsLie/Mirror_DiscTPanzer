@@ -6,11 +6,11 @@ import com.badlogic.gdx.utils.Array;
 * Пример:
   rule1 = new Rule(){
         public Array<FuzzyFunction> apply(Array<Double> distances){
-            ruleValue = Math.min( lowDistanceRule(distances[0]), midDistanceRule(distances[1]),
+            double ruleValue = Math.min( lowDistanceRule(distances[0]), midDistanceRule(distances[1]),
                         midDistanceRule(distances[2]) );
 
-            leftFun = Rule.topBound(ruleValue, moveFuns[1]);
-            rightFun = leftFun;
+            FuzzyFunction leftFun = Rule.topBound(ruleValue, moveFuns[1]);
+            FuzzyFunction rightFun = leftFun;
 
             return(leftFun, rightFun);
          }
@@ -24,11 +24,12 @@ public abstract class Rule {
     public abstract Array<FuzzyFunction> apply(Array<Double> distances);
 
     /* Ограничивает функцию сверху, возвращает новую функцию */
-    public static FuzzyFunction topBound(double bound, FuzzyFunction fuzzyFun){
+    public static FuzzyFunction topBound(final double bound, final FuzzyFunction fuzzyFun){
         if (bound == 0)
             return zeroFunction;
         return new FuzzyFunction(){
-            public double fun(double x){
+            @Override
+            public double fun(final double x){
                 double value = fuzzyFun.fun(x);
                 if (value > bound){
                     return bound;
@@ -40,8 +41,9 @@ public abstract class Rule {
     }
 
     static private FuzzyFunction zeroFunction = new FuzzyFunction(){
-                                                    public double fun(double x){
-                                                        return 0;
-                                                    }
-                                                };
+            @Override
+            public double fun(double x){
+                return 0;
+            }
+        };
 }

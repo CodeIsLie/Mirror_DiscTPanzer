@@ -117,6 +117,8 @@ public class Sensor {
         return sensorEnd;
     }
 
+    public double getRange() { return range; }
+
     private void debugMessage() {
         if (seeing == Seeing.OBJECT) {
             System.out.println("Sensor " + debugTag + " just found object in " + range + " pixels!");
