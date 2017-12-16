@@ -8,7 +8,7 @@ public class MapManager  {
 
     private static MapManager instance = new MapManager();
 
-    private String[] maps = new String[] {"grassmap", "lavamap"};
+    private String[] maps = new String[] {"grassmap", "lavamap", "desertmap"};
     private Panzer panzer;
 
     public static MapManager getInstance() {

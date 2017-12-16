@@ -28,6 +28,11 @@
    eJzt0EkKwkAURdFfFTtQ0G3Yuxbbvdgsyt6t2AsKugzvJOhEdBIC8V04EKgM6pWZUkoppZSKuqkzm2GOBZZYYY2Ni/t20bdl4w57HHDECWdc/mC/82YeAVJII4Mscj7u20VfmY0VVFFDHQ000Ur4/jv7Hmijgy566GPgX+dJK9xVDMxKGPI9whgTXHF7O0/aO4S7PpXnrBD8/r9SSimllFJKKaWUUkp96wlJnxwG
   </data>
  </layer>
+ <layer name="Слой тайлов 7" width="64" height="36">
+  <data encoding="base64" compression="zlib">
+   eJzt07EJACAMRcFAxtH957O0tJIouZvg5UMiAICTkREzqyt2R0XPaxsA93X/t+73AwAAAADwjwUXfgKM
+  </data>
+ </layer>
  <layer name="gragon" width="64" height="36">
   <data encoding="base64" compression="zlib">
    eJztzscVAUAAANFVhqwlWSuyVmStyFqRHU0LLrsHM+/9+4RgZmZmZv9YFTXU0UATLbTRSfgVqy566GOAIUYYY5JuK1pTzDDHAkussMYm4VestthhjwOOOOGMS8KvWF1xwx0PPPHCG5+EX7HKZkLIIY8CiiihjEom9Z2ZmZmZmZmZmZnZ730BtqsaoQ==
@@ -36,9 +41,6 @@
  <objectgroup name="obstacles">
   <object id="365" x="150" y="210">
    <polygon points="0,0 -26,5 -70,-14 -134,-91 -136,-145 -84,-198 -7,-197 69,-154 98,-97 63,-53"/>
-  </object>
-  <object id="366" x="417" y="227">
-   <polygon points="0,0 -5,49 61,65 62,33 26,-6"/>
   </object>
   <object id="367" x="69" y="366">
    <polygon points="0,0 56,0 94,30 123,-24 191,-21 160,22 179,53 232,92 236,141 208,156 98,126 27,50"/>
@@ -114,9 +116,6 @@
   </object>
   <object id="395" x="1374" y="6">
    <polygon points="0,0 0,42 46,61 69,37 35,-11"/>
-  </object>
-  <object id="396" x="1503" y="226">
-   <polygon points="0,0 -2,47 22,59 67,39 72,-4"/>
   </object>
   <object id="397" x="1662" y="194">
    <polygon points="0,0 4,52 125,66 134,-4"/>
