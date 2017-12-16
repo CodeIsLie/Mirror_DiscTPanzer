@@ -49,11 +49,8 @@ public class ProcessScreen extends ScreenAdapter {
 
     public Panzer panzer;
 
-    public ProcessScreen(PanzerProject game, String mapPath) {
+    public ProcessScreen(PanzerProject game) {
         this.game = game;
-        mapManager = MapManager.getInstance();
-        Map currentMap = new Map(mapPath);
-        mapManager.setMap(currentMap);
         shapeRenderer = new ShapeRenderer();
         camera = new OrthographicCamera();
         camera.position.set(Settings.WORLD_WIDTH / 2, Settings.WORLD_HEIGHT / 2, 0);
@@ -66,6 +63,9 @@ public class ProcessScreen extends ScreenAdapter {
 
     @Override
     public void show() {
+        mapManager = MapManager.getInstance();
+        Map currentMap = new Map(Settings.getMapname() + ".tmx");
+        mapManager.setMap(currentMap);
         panzer = new Panzer(Settings.getStartAngle());
         MapManager.getInstance().setPanzer(panzer);
         mapRenderer = new OrthogonalTiledMapRenderer(mapManager.getMap().getTiledMap(), batch);

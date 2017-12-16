@@ -8,14 +8,16 @@ import com.badlogic.gdx.math.Vector2;
  */
 
  public final class Settings {
+    public static final int SPEED_LIMIT = 100;
+    public static final int SENSORS_LIMIT = 500;
+    private static String mapname = "desertmap.tmx";
     private static Vector2 startPos = new Vector2(0, 0);
     private static Vector2 finishPos = new Vector2(800, 600);
-    private static int sensorRange = 100;
-    private static int maxSpeed = 50;
+    private static int sensorRange = SENSORS_LIMIT;
+    private static int maxSpeed = SPEED_LIMIT;
     private static int startAngle = 0;
     public static final int WORLD_WIDTH = 2048;
     public static final int WORLD_HEIGHT = 1152;
-    private static TiledMap map;
     private static boolean drawsensors = true;
 
     public static boolean isDrawsensors() {
@@ -25,10 +27,6 @@ import com.badlogic.gdx.math.Vector2;
     public static void setDrawsensors(boolean drawsensors) {
         Settings.drawsensors = drawsensors;
     }
-
-    static public TiledMap getMap() {return map;}
-
-    static public void setMap(TiledMap newMap) {map = newMap;}
 
     static public int getStartAngle() {
         return startAngle;
@@ -69,5 +67,13 @@ import com.badlogic.gdx.math.Vector2;
 
     static public void setSensorRange(int newSensAct) {
         sensorRange = newSensAct;
+    }
+
+    public static String getMapname() {
+        return mapname;
+    }
+
+    public static void setMapname(String mapname) {
+        Settings.mapname = mapname;
     }
 }

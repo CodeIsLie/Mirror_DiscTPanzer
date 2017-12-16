@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.sun.corba.se.impl.naming.cosnaming.InternalBindingKey;
 
 /**
  * Created by Влада on 03.12.2017.
@@ -69,6 +70,7 @@ public class MainMenuScreen extends ScreenAdapter {
         applyButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                Settings.setMapname(mapField.getSelected());
                 process.setProcess();
                 return true;
             }
@@ -79,13 +81,14 @@ public class MainMenuScreen extends ScreenAdapter {
         Label sensor = new Label("Max sensors range:", skin); sensor.setFontScale(2);
         Label angle = new Label("Start angle:", skin); angle.setFontScale(2);
         Label mmap = new Label("Select map:", skin); mmap.setFontScale(2);
-        velocityField = new TextField("50", skin);
-        sensorField = new TextField("500", skin);
-        angleField = new TextField("0", skin);
+        velocityField = new TextField(Integer.toString(Settings.getMaxSpeed()), skin);
+        sensorField = new TextField(Integer.toString(Settings.getSensorRange()), skin);
+        angleField = new TextField(Integer.toString(Settings.getStartAngle()), skin);
 
         String[] maps = MapManager.getInstance().getMaps();
         mapField = new SelectBox(skin);
         mapField.setItems(maps);
+        mapField.setSelected(Settings.getMapname());
         labelTexture = new Texture("label.png");
         label = new Image(labelTexture);
 

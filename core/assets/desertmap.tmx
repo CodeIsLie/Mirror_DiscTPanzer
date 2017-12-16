@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="64" height="36" tilewidth="32" tileheight="32" nextobjectid="448">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="64" height="36" tilewidth="32" tileheight="32" nextobjectid="449">
  <tileset firstgid="1" name="desertmap" tilewidth="32" tileheight="32" tilecount="608" columns="38">
   <image source="desertmap.png" width="1216" height="512"/>
  </tileset>
@@ -15,12 +15,12 @@
  </layer>
  <layer name="Слой тайлов 3" width="64" height="36">
   <data encoding="base64" compression="zlib">
-   eJztmVEOgjAMhrcj6IsmgHoLFU/DAU28i2dRo09ukYaGsDnK1i2ML2kMIHO/LV1XhMiPlbJ17Ekws0L2VvaJOx02wNfH1rT2vRTiIN3H2LSGj7foM2W05pPofD5W+xyg+DwU1Gfvoeyp7EX4vVS0a2AulbKd7I6LAet/p2zPueJTO/iN6gdufPsd+2msH2KQUswvpIWuCS4Bxr0R7oHnCeDIL1ATpICPPD+WHOp/23qVg37bepWDfhs56wftnPor2RnOczGA3B9Cv62mLxOqxXKOf82if976/+mbu35TfQv9T+78z43Jv9ADDZX/MaZ9DEfv2RbfcC30/sfUJ+FY+237u1z6/yaN+r+Ze29I+9i3xqu/oYJD7W+cldXi1xuqe9fuUyfFxJS1vSHeGzufYM1U3zeG8y7aYueTqf08rX0obvA7hGJAX+rvAFwB7f334y5+TW1vSwHiB+rD2PG8wMcXNhNCfg==
+   eJztmW0OgjAMhscR8I8mgnoLv05D9DJ6FxPv4lnU6C/XhIaFsDk61i2MJ2kMQ3CvLV1XhEiPXNos9CSYyRX7SPuGnQ4b6OttbaB9nQmxyezvMa9NPV4onzEDmnei8Xlf7WOA4nNfUJ+9p7SXtDfh92LRDuBcSmmrrDledlj7O0U9ZsuQ2tFvVD9wM7TfVT/19UMIYor5ibiAmuDo4b53wjX4PCEc+QVrghgYIs/3JYX637RepaDftF6loN9EyvpRO6f+MmtMzXMhwNzvQ7+ppi8iqsVSjn9g0j9u/f/0jV2/rr7F/id3/udG51/sgfrK/yq6fQxH79kU33jO9/5H1yfhWPtN+7tU+v86jfDf2Pjg5GFOXICPXeIMtJ9bYzfHOXFC7W/spR2kXaRdW+cerpNiwmVtr4jXhs4nqmaq7yvNuI220L1m134eaO+KG/UdwrJDX+zvAGxB7e334zZ+jW1vSwHjB+vD0PE8wccPE+lERg==
   </data>
  </layer>
  <layer name="Слой тайлов 4" width="64" height="36">
   <data encoding="base64" compression="zlib">
-   eJztmTdSQzEQhmU3hBsY6Agd4QaEjtARbkDoDFyD0BGuQegI1yB0hGsQPjo3kp7Erp71Rv/MN2PP2Arzr7T79hmTp7otY/bhAA5b9a1jmblXYBXWetbxxud3+IBPhfWdMeY5XMBljfu3+TDQNmYQhmC4LT/vHXPdwwM8Cu4/1DebD9PseQZmYU5h/1oK9c3mwzr/3YBN2Mpo/7n6JqUUvoWeMdsd69MVXMMN3EauVUOhZyw21z3BM7zAa+Rae+XzoQMjMApjjnFCz1hsrvuCb/j5+yKQI3w+zMMCLMKSY5zQMxab68b57QRMwpTA/n0+bMMO7MKeY5yqcdJv8vlwBMdwAqeOcarGSVNVNU6aqqpxUvQ/xdYNTVG/PCPXpdTPyJrxFpMztZ6RbdKMtxxypma8xeTM1HWWZrzF5MwcYkZTpc4qdVYdKnWXOw9K3suSPS4p33x5UPJedvW4QvuMUvWLLw9K3suuHldonzFVvSx5L7t6XKF9xtT1srZyfQdTVFRUVKSvX2NbhfU=
+   eJztmTdSBDEQRbWbYG6AyTAZ5gaYBJthboBJsNfAZJhrYLIFrrELGeYamEe2yUijHvXMakq/6lXtVM1K3dWtbkljTJw6ahhzDCdw2qjOjhXmXoU1WO+y453fH/AJXwr2XTHmNdzAbYX+Z8Whr2lMPwzAYDP8vC3meoJneAnov2/csuIwhc/TMAOzCv5ryTduWXHY4L+bsAXbEfkfa9xCqYy4+a6xrBrr0h3cwwM8Cm3VkO8ak/a6NnTgFd6EtnbLFYchGIYRGLWM47vGpL3uG37g9/8hQI9wxWEO5mEBFi3j+K4xaa8b491xmIDJAP674rADu7AH+5Zx8uZJr8kVhzM4hwu4tIyTN0/qqrx5UlflzZOkYpLuG+qiXjkjV6Wyz8ia+SbpmVpn5Cxp5lsMPVMz3yQ9s+x9lma+SXpmDDmjqbTPSvusKpT2XfY+GLIua9xxLWHzcoG4ufpgyLpsu+OSfoM54N3DAv67+mDIumy749L+BiNVyLpsu+PyvWds1axWxfoNJikpKSlJX3/0n3/X
   </data>
  </layer>
  <layer name="Слой тайлов 5" width="64" height="36">
@@ -30,7 +30,7 @@
  </layer>
  <layer name="Слой тайлов 6" width="64" height="36">
   <data encoding="base64" compression="zlib">
-   eJztmcsNwkAMRJ1I0Az0AVfoA1qGUrIXS4AU4mQdf+R5lz3uWJ6MrQ0RAPl5DUTvwVuFH4eR6Dh6q/jm0vpxLdyTR6v9GaT+Nb04NR+dDb00p01Tx5pe3Nqdd4V7pfrntGnp8CK7/r3IOqu0dEecVRKy6o4O5ySf1fYGzkk+I+0NAEShWi78glzYBnwD31iSdb/XovKejKxB1kixfmf7JIJPPd+HovjUsg97+23L3LPsw5Lfeud21rnHdWfV30vVunuQ5pbnjOvlXx5wbi3Vl/kfiOS7yFwfIJoAiYwl3w==
+   eJztmUsOwjAMRN1K5TJwD7qFe8CV4SjNxhIgFdzi+CPP22SZsTwaWwkRAPl5DETPwVuFH9NIdBi9Vbxzbv2YC/fk1mq/B6l/Sy+OzUcnQy+tadPUsaUXl3bnVeFeqf41bVo6vMiuvxdZZ5WW7oizSkJW3dHhnOSz2t7AOclnpL0BgChUy4VPkAv7gG/gG0uy7vdaVN6TkTXIGinW72yvRPCp5/tQFJ9a9qG33/bMPcs+9PZb5bkHaiHNLc8Z9y/f8oxz61d9mf9AJHmWuT5AtAA6hyI/
   </data>
  </layer>
  <layer name="Слой тайлов 7" width="64" height="36">
@@ -54,15 +54,6 @@
   </data>
  </layer>
  <objectgroup name="obstacles">
-  <object id="405" x="64" y="1023">
-   <polygon points="0,0 -28,0 -32,-63 34,-62 40,-38"/>
-  </object>
-  <object id="406" x="103" y="988">
-   <polygon points="0,0 36,0 60,-38 63,-61 -6,-60"/>
-  </object>
-  <object id="407" x="95" y="831">
-   <polygon points="0,0 1,121 93,125 120,120 129,99 132,3"/>
-  </object>
   <object id="408" x="226" y="829">
    <polygon points="0,0 -68,2 -68,-571 2,-572"/>
   </object>
@@ -179,6 +170,9 @@
   </object>
   <object id="447" x="2012" y="791">
    <polygon points="0,0 -32,60 -64,70 -58,145 24,140"/>
+  </object>
+  <object id="448" x="156" y="833.333">
+   <polygon points="0,0 0,64 61.3333,62.6667 72,-2.66667"/>
   </object>
  </objectgroup>
 </map>

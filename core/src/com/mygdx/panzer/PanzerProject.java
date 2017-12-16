@@ -12,15 +12,14 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Box2D;
 
 public class PanzerProject extends Game {
-
     private ProcessScreen.ProcessState processState;
     public ProcessScreen proc;
+
 
 	@Override
 	public void create () {
 		Box2D.init();
-		//proc = new ProcessScreen(this, MapManager.DEBUG_MAP_PATH);
-        proc = new ProcessScreen(this, "lavamap.tmx");
+        proc = new ProcessScreen(this);
         setScreen(new MainMenuScreen(this));
 	}
 
