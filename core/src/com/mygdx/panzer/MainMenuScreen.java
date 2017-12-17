@@ -22,6 +22,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.sun.corba.se.impl.naming.cosnaming.InternalBindingKey;
 
+import java.io.Console;
+
 /**
  * Created by Влада on 03.12.2017.
  */
@@ -91,19 +93,87 @@ public class MainMenuScreen extends ScreenAdapter {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 Settings.setMapname(mapField.getSelected());
                 Settings.setDrawsensors(isEnableSensors);
+                String s = velocityField.getText();
+                int value = s.equals("")? Settings.SPEED_LIMIT : Integer.valueOf(velocityField.getText());
+                value = value < Settings.SPEED_MIN? Settings.SPEED_MIN : value;
+                Settings.setMaxSpeed(value);
+                s = sensorField.getText();
+                value = s.equals("")? Settings.SENSORS_LIMIT : Integer.valueOf(sensorField.getText());
+                value = value < Settings.SENSORS_MIN? Settings.SENSORS_MIN : value;
+                Settings.setSensorRange(value);
+                s = angleField.getText();
+                value = s.equals("")? Settings.ANGLE_LIMIT : Integer.valueOf(angleField.getText());
+                Settings.setStartAngle(value);
                 process.setProcess();
                 return true;
             }
         });
 
 
-        Label velocity = new Label("Max Velocity:", skin); velocity.setFontScale(2);
+        Label velocity = new Label("Max speed:", skin); velocity.setFontScale(2);
         Label sensor = new Label("Max sensors range:", skin); sensor.setFontScale(2);
         Label angle = new Label("Start angle:", skin); angle.setFontScale(2);
         Label mmap = new Label("Select map:", skin); mmap.setFontScale(2);
         velocityField = new TextField(Integer.toString(Settings.getMaxSpeed()), skin);
+        velocityField.setMaxLength(3);
+        velocityField.setMessageText("MAX = " + String.valueOf(Settings.SPEED_LIMIT));
+        velocityField.setTextFieldListener(new TextField.TextFieldListener() {
+            @Override
+            public void keyTyped(TextField textField, char c) {
+                String s = textField.getText();
+                if (!s.equals(""))
+                {
+                    int newvalue = Integer.valueOf(textField.getText());
+                    if (newvalue > Settings.SPEED_LIMIT)
+                        textField.setText(String.valueOf(Settings.SPEED_LIMIT));
+                }
+            }
+        });
+
         sensorField = new TextField(Integer.toString(Settings.getSensorRange()), skin);
+        sensorField.setMaxLength(3);
+        sensorField.setMessageText("MAX = " + String.valueOf(Settings.SENSORS_LIMIT));
+        sensorField.setTextFieldListener(new TextField.TextFieldListener() {
+            @Override
+            public void keyTyped(TextField textField, char c) {
+                String s = textField.getText();
+                if (!s.equals(""))
+                {
+                    int newvalue = Integer.valueOf(textField.getText());
+                    if (newvalue > Settings.SENSORS_LIMIT)
+                        textField.setText(String.valueOf(Settings.SENSORS_LIMIT));
+                }
+            }
+        });
+
         angleField = new TextField(Integer.toString(Settings.getStartAngle()), skin);
+        angleField.setMaxLength(3);
+        angleField.setMessageText("MAX = " + String.valueOf(Settings.ANGLE_LIMIT));
+        angleField.setTextFieldListener(new TextField.TextFieldListener() {
+            @Override
+            public void keyTyped(TextField textField, char c) {
+                String s = textField.getText();
+                if (!s.equals(""))
+                {
+                    int newvalue = Integer.valueOf(textField.getText());
+                    if (newvalue > Settings.ANGLE_LIMIT)
+                        textField.setText(String.valueOf(Settings.ANGLE_LIMIT));
+                }
+            }
+        });
+
+        TextField.TextFieldFilter filter = new TextField.TextFieldFilter() {
+            @Override
+            public boolean acceptChar(TextField textField, char c) {
+                if (Character.toString(c).matches("^[0-9]")) {
+                    return true;
+                }
+                return false;
+            }
+        };
+        velocityField.setTextFieldFilter(filter);
+        sensorField.setTextFieldFilter(filter);
+        angleField.setTextFieldFilter(filter);
 
         String[] maps = MapManager.getInstance().getMaps();
         mapField = new SelectBox(skin);

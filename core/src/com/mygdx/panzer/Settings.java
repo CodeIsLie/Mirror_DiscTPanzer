@@ -9,7 +9,10 @@ import com.badlogic.gdx.math.Vector2;
 
  public final class Settings {
     public static final int SPEED_LIMIT = 100;
+    public static final int SPEED_MIN = 1;
     public static final int SENSORS_LIMIT = 500;
+    public static final int SENSORS_MIN = 10;
+    public static final int ANGLE_LIMIT = 359;
     private static String mapname = "desertmap.tmx";
     private static Vector2 startPos = new Vector2(0, 0);
     private static Vector2 finishPos = new Vector2(800, 600);
