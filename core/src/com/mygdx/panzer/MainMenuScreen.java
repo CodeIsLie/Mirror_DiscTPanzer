@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.sun.corba.se.impl.naming.cosnaming.InternalBindingKey;
 
@@ -45,6 +47,7 @@ public class MainMenuScreen extends ScreenAdapter {
     private Texture labelTexture;
     private Image label;
     private  BitmapFont font;
+    private boolean isEnableSensors = Settings.isDrawsensors();
 
     public MainMenuScreen(final PanzerProject panz)
     {
@@ -63,7 +66,23 @@ public class MainMenuScreen extends ScreenAdapter {
         disableSensorsTexture = new Texture("disabledSensors.png");
         Label drawsensors = new Label("Draw sensors", skin);
         drawsensors.setFontScale(2);
-        enableSensors = new Image(enableSensorsTexture);
+        enableSensors = isEnableSensors? new Image(enableSensorsTexture) : new Image(disableSensorsTexture);
+        enableSensors.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if (isEnableSensors)
+                {
+                    enableSensors.setDrawable(new TextureRegionDrawable(new TextureRegion(disableSensorsTexture)));
+                    isEnableSensors = false;
+                }
+                else
+                {
+                    enableSensors.setDrawable(new TextureRegionDrawable(new TextureRegion(enableSensorsTexture)));
+                    isEnableSensors = true;
+                }
+                return true;
+            }
+        });
 
         applyButtonTexture = new Texture("ApplyButton.png");
         applyButton = new Image(applyButtonTexture);
@@ -71,6 +90,7 @@ public class MainMenuScreen extends ScreenAdapter {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 Settings.setMapname(mapField.getSelected());
+                Settings.setDrawsensors(isEnableSensors);
                 process.setProcess();
                 return true;
             }
