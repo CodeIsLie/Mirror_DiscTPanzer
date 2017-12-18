@@ -9,8 +9,8 @@ public class FunctionSet {
         Array<FuzzyFunction> funs = new Array<>();
 
         //контрольные значения дистанций
-        final float d1 = 20;
-        final float d2 = 40;
+        final float d1 = 70;
+        final float d2 = 150;
         //final double d3 = 60;
         //final double d4 = 80;
         //double d5 = 50;
@@ -58,8 +58,8 @@ public class FunctionSet {
     public static Array<FuzzyFunction> getTrackFuns(){
         Array<FuzzyFunction> funs = new Array<>();
 
-        final float speed1 = 15;
-        final float speed2 = 50;
+        final float speed1 = 30;
+        final float speed2 = 90;
         final float speed3 = 100;
         final float speed4 = 150;
 

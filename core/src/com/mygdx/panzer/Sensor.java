@@ -134,9 +134,9 @@ public class Sensor {
 
     private void debugMessage() {
         if (seeing == Seeing.OBJECT) {
-            //System.out.println("Sensor " + debugTag + " just found object in " + range + " pixels!");
+            System.out.println("Sensor " + debugTag + " just found object in " + range + " pixels!");
         } else {
-            //System.out.println("Sensor " + debugTag + " found nothing...");
+            System.out.println("Sensor " + debugTag + " found nothing...");
         }
     }
 
