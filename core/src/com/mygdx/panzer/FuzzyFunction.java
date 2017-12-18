@@ -19,5 +19,5 @@ FuzzyFunction fuzzyFun1 = new FuzzyFunction(){
         };
  */
 public abstract class FuzzyFunction {
-    abstract public double fun(double x);
+    abstract public float fun(float x);
 }

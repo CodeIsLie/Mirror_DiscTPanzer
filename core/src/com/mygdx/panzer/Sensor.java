@@ -117,13 +117,17 @@ public class Sensor {
         return sensorEnd;
     }
 
-    public double getRange() { return range; }
+    public int getRange() { return range; }
+
+    public Seeing getSeeing() {
+        return seeing;
+    }
 
     private void debugMessage() {
         if (seeing == Seeing.OBJECT) {
-            System.out.println("Sensor " + debugTag + " just found object in " + range + " pixels!");
+            //System.out.println("Sensor " + debugTag + " just found object in " + range + " pixels!");
         } else {
-            System.out.println("Sensor " + debugTag + " found nothing...");
+            //System.out.println("Sensor " + debugTag + " found nothing...");
         }
     }
 }

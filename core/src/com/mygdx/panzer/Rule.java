@@ -21,16 +21,16 @@ public abstract class Rule {
 
     /*возвращает массив из 2 функций, первая для левой гуменицы, вторая для правой
     */
-    public abstract Array<FuzzyFunction> apply(Array<Double> distances);
+    public abstract Array<FuzzyFunction> apply(Array<Float> distances, int direction);
 
     /* Ограничивает функцию сверху, возвращает новую функцию */
-    public static FuzzyFunction topBound(final double bound, final FuzzyFunction fuzzyFun){
+    public static FuzzyFunction topBound(final float bound, final FuzzyFunction fuzzyFun){
         if (bound == 0)
             return zeroFunction;
         return new FuzzyFunction(){
             @Override
-            public double fun(final double x){
-                double value = fuzzyFun.fun(x);
+            public float fun(final float x){
+                float value = fuzzyFun.fun(x);
                 if (value > bound){
                     return bound;
                 }
@@ -42,7 +42,7 @@ public abstract class Rule {
 
     static private FuzzyFunction zeroFunction = new FuzzyFunction(){
             @Override
-            public double fun(double x){
+            public float fun(float x){
                 return 0;
             }
         };
