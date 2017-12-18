@@ -166,13 +166,14 @@ public class PanzerHUD {
         Gdx.input.setInputProcessor(multiplexer);
     }
 
-    private boolean panzInPolygons(float x, float y)
-    {
-        Rectangle panz = game.proc.panzer.panzerSprite.getBoundingRectangle();
-        Rectangle newpanz = new Rectangle(x - panz.getWidth() / 2, y - panz.getHeight() / 2, panz.getWidth(), panz.getHeight());
-        float[] vertices = {newpanz.x, newpanz.y, newpanz.x + newpanz.width, newpanz.y,
-                newpanz.x + newpanz.width, newpanz.y + newpanz.height, newpanz.x, newpanz.y + newpanz.height};
+    private boolean panzInPolygons(float x, float y) {
+        Vector2 panzerSize = mapManager.getPanzer().getPanzerSize();
+        float[] vertices = { 0, 0, 0, panzerSize.y, panzerSize.x, panzerSize.y, panzerSize.x, 0};
         Polygon npp = new Polygon(vertices);
+        npp.setOrigin(panzerSize.x / 2,panzerSize.y / 2);
+        npp.setRotation(mapManager.getPanzer().getAngle());
+        npp.setPosition(x - panzerSize.x/2, y - panzerSize.y/2);
+
         for (Polygon p:mapManager.getMap().getPolygonPhysObjects()){
             if (Intersector.overlapConvexPolygons(p, npp))
                 return true;

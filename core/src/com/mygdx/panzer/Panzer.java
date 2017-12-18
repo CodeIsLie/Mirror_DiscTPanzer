@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -18,14 +19,12 @@ public class Panzer {
     private static final int SENSOR_COUNT = 3;
 
     private Vector2 position = new Vector2(0,0);
-    private int deltaX = 0;
-    private int deltaY = 0;
     // В градусах
     private float angle = 0;
-
+    private Polygon physBody;
     public Sprite panzerSprite;
     private Texture panzerImage;
-
+    private Vector2 panzerSize;
     private Array<Sensor> sensors = new Array<>();
 
     private RuleSet ruleSet;
@@ -33,24 +32,27 @@ public class Panzer {
     public Panzer(float startAngle) {
         this.angle = startAngle;
         panzerImage = new Texture(Gdx.files.internal("panzer.png"));
+        panzerSize = new Vector2(panzerImage.getWidth(), panzerImage.getHeight());
         panzerSprite = new Sprite(panzerImage);
-        deltaX = panzerImage.getWidth() / 2;
-        deltaY = panzerImage.getHeight() / 2;
+        int deltaX = panzerImage.getWidth() / 2;
+        int deltaY = panzerImage.getHeight() / 2;
         Settings.setFinishPos(new Vector2(Settings.WORLD_WIDTH - deltaX, Settings.WORLD_HEIGHT - deltaY));
         //Settings.setStartPos(new Vector2(deltaX, deltaY));
         //TODO: убрать, если начальный поворот не задается
+        physBody = new Polygon();
         panzerSprite.setRotation(startAngle);
         Rectangle p = panzerSprite.getBoundingRectangle();
         Settings.setStartPos(new Vector2(p.getWidth() / 2, p.getHeight() / 2));
         for (int i = 0, sensorAngle = 45; i < SENSOR_COUNT; ++i, sensorAngle-=45) {
-            Sensor sensor = new Sensor(Settings.getSensorRange() + (int)panzerSprite.getWidth() / 2, sensorAngle);
+            Sensor sensor = new Sensor(Settings.getSensorRange() + (int)panzerSize.x / 2, sensorAngle);
             sensor.setDebugTag("SENSOR" + i);
             sensors.add(sensor);
         }
-        /*Sensor sensor = new Sensor(Settings.getSensorRange(), 0);
-        sensor.setDebugTag("SENSOR1");
-        sensors.add(sensor);*/
-
+        float[] vertices = { 0, 0, 0, panzerSize.y, panzerSize.x, panzerSize.y, panzerSize.x, 0};
+        physBody.setVertices(vertices);
+        physBody.setPosition(Settings.getStartPos().x - panzerSize.x/2, Settings.getStartPos().y - panzerSize.y/2);
+        physBody.setOrigin(panzerSize.x / 2,panzerSize.y / 2);
+        physBody.setRotation(startAngle);
         ruleSet = new RuleSet(RuleSet.getRules());
     }
 
@@ -96,9 +98,11 @@ public class Panzer {
         float sectorLength = Math.abs(weightDiff);
         float straightMovement = Math.min(leftMovement, rightMovement);
         moveStraight(straightMovement);
-        double rotationAngle = (180 * sectorLength) / (panzerSprite.getHeight() * Math.PI);
+        double rotationAngle = (180 * sectorLength) / (panzerSize.y * Math.PI);
         angle = isRightRotation ? angle - (float)rotationAngle : angle + (float)rotationAngle;
-        float movementRemainder = (float) Math.sin(rotationAngle * (Math.PI / 180)) * (panzerSprite.getHeight() / 2);
+        physBody.setOrigin(panzerSize.x / 2,panzerSize.y / 2);
+        physBody.setRotation(angle);
+        float movementRemainder = (float) Math.sin(rotationAngle * (Math.PI / 180)) * (panzerSize.y / 2);
         moveStraight(movementRemainder);
     }
 
@@ -110,10 +114,14 @@ public class Panzer {
         Vector2 new_position = new Vector2((float)(x + position.x), (float)y + (position.y));
         position.x = new_position.x;
         position.y = new_position.y;
+        physBody.setPosition(position.x - panzerSize.x/2, position.y - panzerSize.y/2);
     }
     public void reset() {
         angle = Settings.getStartAngle();
         setPosition((int)Settings.getStartPos().x, (int)Settings.getStartPos().y);
+        physBody.setPosition(Settings.getStartPos().x - panzerSize.x/2, Settings.getStartPos().y - panzerSize.y/2);
+        physBody.setOrigin(panzerSize.x / 2,panzerSize.y / 2);
+        physBody.setRotation(angle);
     }
 
 
@@ -139,5 +147,13 @@ public class Panzer {
 
     public Array<Sensor> getSensors() {
         return sensors;
+    }
+
+    public Polygon getPhysBody() {
+        return physBody;
+    }
+
+    public Vector2 getPanzerSize() {
+        return panzerSize;
     }
 }

@@ -102,7 +102,7 @@ public class ProcessScreen extends ScreenAdapter {
 
     // рендерим прямоугольники физических обьектов
     private void drawDebug() {
-        Rectangle r = panzer.panzerSprite.getBoundingRectangle();
+        Polygon panzer = mapManager.getPanzer().getPhysBody();
         shapeRenderer.setProjectionMatrix(camera.projection);
         shapeRenderer.setTransformMatrix(camera.view);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -112,7 +112,7 @@ public class ProcessScreen extends ScreenAdapter {
             shapeRenderer.polygon(polygon.getTransformedVertices());
         }
 
-        shapeRenderer.rect(r.x, r.y, r.getWidth(), r.getHeight());
+        shapeRenderer.polygon(panzer.getTransformedVertices());
         shapeRenderer.end();
     }
 
