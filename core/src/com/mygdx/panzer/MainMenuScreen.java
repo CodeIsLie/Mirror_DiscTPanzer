@@ -61,12 +61,12 @@ public class MainMenuScreen extends ScreenAdapter {
         viewport.apply(true);
         batch = new SpriteBatch();
         this.stage = new Stage(viewport, batch);
-        skin = new Skin(Gdx.files.internal("uiskin.json"));
+        skin = new Skin(Gdx.files.internal("HUD/uiskin.json"));
         skin.getFont("default-font").getData().setScale(2);
 
-        enableSensorsTexture = new Texture("enabledSensors.png");
-        disableSensorsTexture = new Texture("disabledSensors.png");
-        Label drawsensors = new Label("Draw sensors", skin);
+        enableSensorsTexture = new Texture("HUD/enabledSensors.png");
+        disableSensorsTexture = new Texture("HUD/disabledSensors.png");
+        Label drawsensors = new Label("HUD/Draw sensors", skin);
         drawsensors.setFontScale(2);
         enableSensors = isEnableSensors? new Image(enableSensorsTexture) : new Image(disableSensorsTexture);
         enableSensors.addListener(new InputListener(){
@@ -86,7 +86,7 @@ public class MainMenuScreen extends ScreenAdapter {
             }
         });
 
-        applyButtonTexture = new Texture("ApplyButton.png");
+        applyButtonTexture = new Texture("HUD/ApplyButton.png");
         applyButton = new Image(applyButtonTexture);
         applyButton.addListener(new InputListener() {
             @Override
@@ -179,7 +179,7 @@ public class MainMenuScreen extends ScreenAdapter {
         mapField = new SelectBox(skin);
         mapField.setItems(maps);
         mapField.setSelected(Settings.getMapname());
-        labelTexture = new Texture("label.png");
+        labelTexture = new Texture("HUD/label.png");
         label = new Image(labelTexture);
 
         float space = 180;
@@ -208,7 +208,7 @@ public class MainMenuScreen extends ScreenAdapter {
         inner2.setSize(WIDTH, applyButtonTexture.getHeight() + 20);
         inner2.row(); inner2.add().padRight(10);
         inner2.add(enableSensors); inner2.add(drawsensors);
-        inner2.add().padRight(WIDTH - 500);
+        inner2.add().padRight(WIDTH - 550);
         inner2.add(applyButton); inner2.add().padRight(20);
         inner2.row();
         inner2.add().padBottom(10);

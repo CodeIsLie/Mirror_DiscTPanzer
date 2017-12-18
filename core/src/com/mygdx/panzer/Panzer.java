@@ -31,14 +31,13 @@ public class Panzer {
 
     public Panzer(float startAngle) {
         this.angle = startAngle;
-        panzerImage = new Texture(Gdx.files.internal("panzer.png"));
+        panzerImage = new Texture(Gdx.files.internal("maps/panzer.png"));
         panzerSize = new Vector2(panzerImage.getWidth(), panzerImage.getHeight());
         panzerSprite = new Sprite(panzerImage);
         int deltaX = panzerImage.getWidth() / 2;
         int deltaY = panzerImage.getHeight() / 2;
         Settings.setFinishPos(new Vector2(Settings.WORLD_WIDTH - deltaX, Settings.WORLD_HEIGHT - deltaY));
-        //Settings.setStartPos(new Vector2(deltaX, deltaY));
-        //TODO: убрать, если начальный поворот не задается
+
         physBody = new Polygon();
         panzerSprite.setRotation(startAngle);
         Rectangle p = panzerSprite.getBoundingRectangle();
@@ -54,13 +53,6 @@ public class Panzer {
         physBody.setOrigin(panzerSize.x / 2,panzerSize.y / 2);
         physBody.setRotation(startAngle);
         ruleSet = new RuleSet(RuleSet.getRules(), this);
-    }
-
-    //TODO: удалить выход за границы экрана
-    private void checkForOutOfBounds() {
-        if (position.x >= Settings.WORLD_WIDTH) {
-            position.x = 0;
-        }
     }
 
     public void setPosition(int x, int y) {
@@ -85,7 +77,6 @@ public class Panzer {
         for (Sensor sensor: sensors) {
             sensor.update(delta);
         }
-        checkForOutOfBounds();
         angle = (angle + 360) % 360;
         //System.out.println("current pos: " + position.x + " " + position.y);
     }

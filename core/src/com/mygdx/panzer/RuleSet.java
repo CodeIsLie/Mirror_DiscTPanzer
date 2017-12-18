@@ -3,10 +3,6 @@ package com.mygdx.panzer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Disposable;
-import org.lwjgl.Sys;
-
-import static jdk.nashorn.internal.objects.NativeMath.min;
 
 public class RuleSet {
     private Array<Rule> rules;

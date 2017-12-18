@@ -1,6 +1,5 @@
 package com.mygdx.panzer;
 
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 
 /**

@@ -1,7 +1,5 @@
 package com.mygdx.panzer;
 
-import com.badlogic.gdx.maps.tiled.TiledMap;
-
 public class MapManager  {
 
     public static final String DEBUG_MAP_PATH = "debug.tmx";

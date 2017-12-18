@@ -64,7 +64,7 @@ public class ProcessScreen extends ScreenAdapter {
     @Override
     public void show() {
         mapManager = MapManager.getInstance();
-        Map currentMap = new Map(Settings.getMapname() + ".tmx");
+        Map currentMap = new Map("maps/" + Settings.getMapname() + ".tmx");
         mapManager.setMap(currentMap);
         panzer = new Panzer(Settings.getStartAngle());
         MapManager.getInstance().setPanzer(panzer);

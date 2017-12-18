@@ -59,14 +59,14 @@ public class PanzerHUD {
         this.batch = batch;
         this.stage = new Stage(vp, batch);
 
-        playButtonTexture = new Texture("playButton.png");
-        stopButtonTexture = new Texture("stopButton.png");
-        menuButtonTexture = new Texture("toMenuButton.png");
-        editFinishButtonTexture = new Texture("FinishButton.png");
-        editStartButtonTexture = new Texture("StartButton.png");
-        finishTexture = new Texture("finish.png");
-        pressedFinishButtonTexture = new Texture("pressedFinishButton.png");
-        pressedStartButtonTexture = new Texture("pressedStartButton.png");
+        playButtonTexture = new Texture("HUD/playButton.png");
+        stopButtonTexture = new Texture("HUD/stopButton.png");
+        menuButtonTexture = new Texture("HUD/toMenuButton.png");
+        editFinishButtonTexture = new Texture("HUD/FinishButton.png");
+        editStartButtonTexture = new Texture("HUD/StartButton.png");
+        finishTexture = new Texture("maps/finish.png");
+        pressedFinishButtonTexture = new Texture("HUD/pressedFinishButton.png");
+        pressedStartButtonTexture = new Texture("HUD/pressedStartButton.png");
 
         playButton = new Image(playButtonTexture);
         playButton.addListener(new InputListener() {
