@@ -92,9 +92,10 @@ public class ProcessScreen extends ScreenAdapter {
         batch.setProjectionMatrix(camera.projection);
         batch.setTransformMatrix(camera.view);
         mapRenderer.render();
-        drawDebug();
-        if (Settings.isDrawsensors())
+        if (Settings.isDrawsensors()) {
             drawSensors();
+            drawDebug();
+        }
         panzer.draw(batch);
         hud.render(delta);
     }
@@ -102,7 +103,7 @@ public class ProcessScreen extends ScreenAdapter {
 
     // рендерим прямоугольники физических обьектов
     private void drawDebug() {
-        Rectangle r = panzer.panzerSprite.getBoundingRectangle();
+        Polygon panzer = mapManager.getPanzer().getPhysBody();
         shapeRenderer.setProjectionMatrix(camera.projection);
         shapeRenderer.setTransformMatrix(camera.view);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -112,7 +113,7 @@ public class ProcessScreen extends ScreenAdapter {
             shapeRenderer.polygon(polygon.getTransformedVertices());
         }
 
-        shapeRenderer.rect(r.x, r.y, r.getWidth(), r.getHeight());
+        shapeRenderer.polygon(panzer.getTransformedVertices());
         shapeRenderer.end();
     }
 
@@ -122,7 +123,13 @@ public class ProcessScreen extends ScreenAdapter {
         shapeRenderer.setTransformMatrix(camera.view);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         for (Sensor sensor: panzer.getSensors()) {
-            shapeRenderer.line(sensor.getSensorBegin(), sensor.getSensorEnd());
+            Vector2 endPoint = null;
+            if (sensor.seeingObject()) {
+                endPoint = new Vector2(sensor.getIntersectPoint());
+            } else {
+                endPoint = new Vector2(sensor.getSensorEnd());
+            }
+            shapeRenderer.line(sensor.getSensorBegin(), endPoint);
         }
         shapeRenderer.end();
     }
