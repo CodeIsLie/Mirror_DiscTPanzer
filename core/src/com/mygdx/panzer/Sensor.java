@@ -15,6 +15,7 @@ public class Sensor {
     private ShapeRenderer debugRenderer = new ShapeRenderer();
     private Vector2 sensorBegin = new Vector2();
     private Vector2 sensorEnd = new Vector2();
+    private Vector2 intersectPoint = new Vector2();
     private MapManager mapManager = MapManager.getInstance();
 
     public enum Seeing {
@@ -44,8 +45,8 @@ public class Sensor {
         double x = maxRange * Math.cos(sum_angle);
         double y = maxRange * Math.sin(sum_angle);
         sensorBegin = new Vector2(position);
-
         sensorEnd = new Vector2((float)(x + sensorBegin.x), (float)y + (sensorBegin.y));
+
         Array<Polygon> polygons = mapManager.getMap().getPolygonPhysObjects();
         float minRange = Float.MAX_VALUE;
         for (Polygon polygon: polygons) {
@@ -72,6 +73,9 @@ public class Sensor {
             seeing = Seeing.NOTHING;
         }
         range = (int)minRange;
+        x = range * Math.cos(sum_angle);
+        y = range * Math.sin(sum_angle);
+        intersectPoint = new Vector2((float)(x + sensorBegin.x), (float)y + (sensorBegin.y));
         range -= panzer.panzerSprite.getWidth() / 2;
         debugMessage();
     }
@@ -86,6 +90,7 @@ public class Sensor {
         double y = maxRange * Math.sin(sum_angle);
         sensorBegin = new Vector2(position);
         sensorEnd = new Vector2((float)(x + sensorBegin.x), (float)y + (sensorBegin.y));
+        seeing = Seeing.NOTHING;
     }
 
     private float calculateRange(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4) {
@@ -119,11 +124,19 @@ public class Sensor {
 
     public double getRange() { return range; }
 
+    public Vector2 getIntersectPoint() {
+        return intersectPoint;
+    }
+
     private void debugMessage() {
         if (seeing == Seeing.OBJECT) {
             System.out.println("Sensor " + debugTag + " just found object in " + range + " pixels!");
         } else {
             System.out.println("Sensor " + debugTag + " found nothing...");
         }
+    }
+
+    public boolean seeingObject() {
+        return seeing == Seeing.OBJECT;
     }
 }
