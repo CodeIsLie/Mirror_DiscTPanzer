@@ -61,7 +61,7 @@ public class Panzer {
     }
 
     public void updatePosition(float delta) {
-        // Скорость - условные единицы в секунду
+        // Скорость - пиксели в секунду
         Array<Float> powers = ruleSet.apply(sensors);
         float leftMove = powers.get(0);
         float rightMove = powers.get(1);
@@ -72,8 +72,10 @@ public class Panzer {
 
         //System.out.println("левое значение " + leftMove + " правое значение " + rightMove);
 
-        // Пустим танк по кругу!
-        calculateMotion(leftMove * (delta / 1),rightMove * (delta / 1));
+
+        calculateMotion(
+                leftMove * (delta / 1) * Settings.getMaxSpeed(),
+                rightMove * (delta / 1) * Settings.getMaxSpeed());
         for (Sensor sensor: sensors) {
             sensor.update(delta);
         }

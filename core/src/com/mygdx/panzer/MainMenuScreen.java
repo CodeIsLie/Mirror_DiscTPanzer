@@ -94,16 +94,16 @@ public class MainMenuScreen extends ScreenAdapter {
                 Settings.setMapname(mapField.getSelected());
                 Settings.setDrawsensors(isEnableSensors);
                 String s = velocityField.getText();
-                int value = s.equals("")? Settings.SPEED_LIMIT : Integer.valueOf(velocityField.getText());
+                float value = s.equals("")? Settings.SPEED_LIMIT : Float.valueOf(velocityField.getText());
                 value = value < Settings.SPEED_MIN? Settings.SPEED_MIN : value;
                 Settings.setMaxSpeed(value);
                 s = sensorField.getText();
-                value = s.equals("")? Settings.SENSORS_LIMIT : Integer.valueOf(sensorField.getText());
-                value = value < Settings.SENSORS_MIN? Settings.SENSORS_MIN : value;
-                Settings.setSensorRange(value);
+                int sensValue = s.equals("")? Settings.SENSORS_LIMIT : Integer.valueOf(sensorField.getText());
+                sensValue = sensValue < Settings.SENSORS_MIN? Settings.SENSORS_MIN : sensValue;
+                Settings.setSensorRange(sensValue);
                 s = angleField.getText();
-                value = s.equals("")? Settings.ANGLE_LIMIT : Integer.valueOf(angleField.getText());
-                Settings.setStartAngle(value);
+                int angValue = s.equals("")? Settings.ANGLE_LIMIT : Integer.valueOf(angleField.getText());
+                Settings.setStartAngle(angValue);
                 process.setProcess();
                 return true;
             }
@@ -114,7 +114,7 @@ public class MainMenuScreen extends ScreenAdapter {
         Label sensor = new Label("Max sensors range:", skin); sensor.setFontScale(2);
         Label angle = new Label("Start angle:", skin); angle.setFontScale(2);
         Label mmap = new Label("Select map:", skin); mmap.setFontScale(2);
-        velocityField = new TextField(Integer.toString(Settings.getMaxSpeed()), skin);
+        velocityField = new TextField(Float.toString(Settings.getMaxSpeed()), skin);
         velocityField.setMaxLength(3);
         velocityField.setMessageText("MAX = " + String.valueOf(Settings.SPEED_LIMIT));
         velocityField.setTextFieldListener(new TextField.TextFieldListener() {
@@ -123,7 +123,7 @@ public class MainMenuScreen extends ScreenAdapter {
                 String s = textField.getText();
                 if (!s.equals(""))
                 {
-                    int newvalue = Integer.valueOf(textField.getText());
+                    float newvalue = Float.valueOf(textField.getText());
                     if (newvalue > Settings.SPEED_LIMIT)
                         textField.setText(String.valueOf(Settings.SPEED_LIMIT));
                 }
