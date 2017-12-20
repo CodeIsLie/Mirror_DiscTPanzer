@@ -110,7 +110,7 @@ public class MainMenuScreen extends ScreenAdapter {
         });
 
 
-        Label velocity = new Label("Max speed:", skin); velocity.setFontScale(2);
+        Label velocity = new Label("Panzer/hours", skin); velocity.setFontScale(2);
         Label sensor = new Label("Max sensors range:", skin); sensor.setFontScale(2);
         Label angle = new Label("Start angle:", skin); angle.setFontScale(2);
         Label mmap = new Label("Select map:", skin); mmap.setFontScale(2);
