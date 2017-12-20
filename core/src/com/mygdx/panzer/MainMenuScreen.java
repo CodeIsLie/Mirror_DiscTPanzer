@@ -66,7 +66,7 @@ public class MainMenuScreen extends ScreenAdapter {
 
         enableSensorsTexture = new Texture("HUD/enabledSensors.png");
         disableSensorsTexture = new Texture("HUD/disabledSensors.png");
-        Label drawsensors = new Label("HUD/Draw sensors", skin);
+        Label drawsensors = new Label("Draw sensors", skin);
         drawsensors.setFontScale(2);
         enableSensors = isEnableSensors? new Image(enableSensorsTexture) : new Image(disableSensorsTexture);
         enableSensors.addListener(new InputListener(){

@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
  */
 
  public final class Settings {
-    public static final float SPEED_LIMIT = 50;
+    public static final float SPEED_LIMIT = 10;
     public static final int SPEED_MIN = 1;
     public static final int SENSORS_LIMIT = 500;
     public static final int SENSORS_MIN = 10;
@@ -15,8 +15,8 @@ import com.badlogic.gdx.math.Vector2;
     private static String mapname = "desertmap.tmx";
     private static Vector2 startPos = new Vector2(0, 0);
     private static Vector2 finishPos = new Vector2(800, 600);
-    private static int sensorRange = SENSORS_LIMIT;
-    private static float maxSpeed = 1;
+    private static int sensorRange = 100;
+    private static float maxSpeed = 3;
     private static int startAngle = 0;
     public static final int WORLD_WIDTH = 2048;
     public static final int WORLD_HEIGHT = 1152;
