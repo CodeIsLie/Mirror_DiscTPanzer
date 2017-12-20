@@ -5,12 +5,13 @@ import com.badlogic.gdx.utils.Array;
 //в этом классе будет происходить инициализация всех наших функций
 public class FunctionSet {
 
-    public static Array<FuzzyFunction> getSensorFuns(){
+    public static Array<FuzzyFunction> getSensorFuns(float maxRange){
         Array<FuzzyFunction> funs = new Array<>();
 
         //контрольные значения дистанций
-        final float d1 = 70;
-        final float d2 = 150;
+        final float d1 = 45;
+        final float d2 = (maxRange < 120) ? maxRange : 120;
+
         //final double d3 = 60;
         //final double d4 = 80;
         //double d5 = 50;
@@ -55,7 +56,7 @@ public class FunctionSet {
         return funs;
     }
 
-    public static Array<FuzzyFunction> getTrackFuns(){
+    public static Array<FuzzyFunction> getTrackFuns(float maxSpeed){
         Array<FuzzyFunction> funs = new Array<>();
 
         final float speed1 = 30;

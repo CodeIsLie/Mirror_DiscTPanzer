@@ -21,7 +21,7 @@ public abstract class Rule {
 
     /*возвращает массив из 2 функций, первая для левой гуменицы, вторая для правой
     */
-    public abstract Array<FuzzyFunction> apply(Array<Float> distances, int direction);
+    public abstract Array<FuzzyFunction> apply(Array<Float> distances, RuleSet.Direction direction);
 
     /* Ограничивает функцию сверху, возвращает новую функцию */
     public static FuzzyFunction topBound(final float bound, final FuzzyFunction fuzzyFun){
