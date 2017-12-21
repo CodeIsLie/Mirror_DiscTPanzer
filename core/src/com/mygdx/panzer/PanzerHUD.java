@@ -166,6 +166,18 @@ public class PanzerHUD {
         Gdx.input.setInputProcessor(multiplexer);
     }
 
+    public boolean isPanzInFinish()
+    {
+        Rectangle finish = new Rectangle(Settings.getFinishPos().x - finishTexture.getWidth() / 2,
+                Settings.getFinishPos().y - finishTexture.getHeight() / 2,
+                finishTexture.getWidth(), finishTexture.getHeight());
+        float[] vertices = {finish.x, finish.y, finish.x + finish.width, finish.y,
+                finish.x + finish.width, finish.y + finish.height, finish.x, finish.y + finish.height};
+        Polygon finishp = new Polygon(vertices);
+        Polygon panz = mapManager.getPanzer().getPhysBody();
+
+        return Intersector.overlapConvexPolygons(finishp, panz);
+    }
     private boolean panzInPolygons(float x, float y) {
         Vector2 panzerSize = mapManager.getPanzer().getPanzerSize();
         float[] vertices = { 0, 0, 0, panzerSize.y, panzerSize.x, panzerSize.y, panzerSize.x, 0};
@@ -205,20 +217,29 @@ public class PanzerHUD {
     }
 
     private void switchToOpposite() {
-        if (game.getProcessState() == ProcessScreen.ProcessState.PAUSE) {
-            toMenu.setVisible(false);
-            editStartButton.setVisible(false);
-            editFinishButton.setVisible(false);
-            game.setProcessState(ProcessScreen.ProcessState.RUN);
-            playButton.setDrawable(new TextureRegionDrawable(new TextureRegion(stopButtonTexture)));
-            playButton.setSize(stopButtonTexture.getWidth(), stopButtonTexture.getHeight());
-        } else if (game.getProcessState() == ProcessScreen.ProcessState.RUN) {
-            toMenu.setVisible(true);
-            editStartButton.setVisible(true);
-            editFinishButton.setVisible(true);
-            game.setProcessState(ProcessScreen.ProcessState.PAUSE);
-            playButton.setDrawable(new TextureRegionDrawable(new TextureRegion(playButtonTexture)));
-            playButton.setSize(stopButtonTexture.getWidth(), stopButtonTexture.getHeight());
+        switch (game.getProcessState())
+        {
+            case FINISHED:
+            case RUN:
+                toMenu.setVisible(true);
+                editStartButton.setVisible(true);
+                editFinishButton.setVisible(true);
+                game.setProcessState(ProcessScreen.ProcessState.PAUSE);
+                playButton.setDrawable(new TextureRegionDrawable(new TextureRegion(playButtonTexture)));
+                playButton.setSize(stopButtonTexture.getWidth(), stopButtonTexture.getHeight());
+                break;
+            case PAUSE:
+                toMenu.setVisible(false);
+                editStartButton.setVisible(false);
+                editFinishButton.setVisible(false);
+                game.setProcessState(ProcessScreen.ProcessState.RUN);
+                playButton.setDrawable(new TextureRegionDrawable(new TextureRegion(stopButtonTexture)));
+                playButton.setSize(stopButtonTexture.getWidth(), stopButtonTexture.getHeight());
+                break;
+            //case FINISHED:
+            //    break;
+            default:
+                break;
         }
     }
 

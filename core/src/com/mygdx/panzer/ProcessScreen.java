@@ -30,7 +30,8 @@ public class ProcessScreen extends ScreenAdapter {
 
     public enum ProcessState {
         RUN,
-        PAUSE
+        PAUSE,
+        FINISHED
     }
 
     private PanzerProject game;
@@ -96,6 +97,8 @@ public class ProcessScreen extends ScreenAdapter {
             drawSensors();
             drawDebug();
         }
+        if (hud.isPanzInFinish())
+            game.setProcessState(ProcessState.FINISHED);
         panzer.draw(batch);
         hud.render(delta);
     }
