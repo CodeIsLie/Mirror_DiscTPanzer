@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="64" height="36" tilewidth="32" tileheight="32" nextobjectid="511">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="64" height="36" tilewidth="32" tileheight="32" nextobjectid="516">
  <tileset firstgid="1" name="desertmap" tilewidth="32" tileheight="32" tilecount="608" columns="38">
   <image source="desertmap.png" width="1216" height="512"/>
  </tileset>
@@ -20,7 +20,7 @@
  </layer>
  <layer name="Слой тайлов 4" width="64" height="36">
   <data encoding="base64" compression="zlib">
-   eJztmTdSAzEUQGU3hBsY0xE6G25AaIgdmBsQGuI1CB3hGoTOwDUIHeEahOfOFEIrrb60u6M382bsGVv6mv+9+pKVKif7NaUO8BCPavHiWGLuZVzB1b443nj9jh/4KRDfOWNe4CVeRVy/Lg8DdaUGcQiH6/7n7TLXPT7go8f12+ZNl4cWa27jFE4LrF8K27zp8rDGd9exgxslWn9Z8+aLIuZN94w1cY03eIt3QrGFwHWve8JnfMFXD3GY8tDAEWzi6D/jtCzrynWv+8Jv/Om98bBHmPIwg7M4h/MZx8zyG3Pd68b47DhO4KSH9ZvysIlbuI07GcZr5g8pKKY8HOMJnuJZ4NgSicRfXPuGqlCUM3IsQp+RJesta2/Vj9QZWYdkvbn0VqGRrDfb3qqHS83kQbLeXHqrMtSMJC41UyVSP56Iga97klgsEPNijue3xD1JSHaJeS/H+n3fk7gS6/xTlHsS2360W7EzUlH+I4xF6PNPIpFIlIlfoohuJA==
+   eJztmDdSAzEUQGU3hBsY0xE6AzcgNMSOcAMwDfEahI5wDUJn4BqEjnANwnNnmFm00korrea/mTdjz9ja/+fL1v9Sqprs1ZTaxwM8rIWLY5FnL+EyrvTE8crrN3zHDw/xnbHmOV7gZcD8s+rQV1eqHwdwsO7+uR2edYf3+OAwf9O6ZdWhRc4TOIlTHvL3hWndsuqwynfXcB03KpR/VevmihjrlvUfq+MKr/EGbz3FVga2Z90jPuEzvjiIQ1eHBg5hE4f/WadluK9sz7pP/MLv7hsHZ4SuDtM4g7M4l3PNPL8x27NuhM+O4hiOO8hfV4dN3MI2budYr1k8pFLR1eEIj/EET0uOTRCE39j2DakQy4wcilhmZBfk7a168TUjh8Cmt0oJ096qi82eiRWb3kr2jPmeSQnpx4UQuLonCcU8MS8U6Bd83JOUyQ4x7xbI3/U9iS2h5p9Y7klM559OxXvkv6Q0/9iQ0vwjCILgmh9N02Xc
   </data>
  </layer>
  <layer name="Слой тайлов 5" width="64" height="36">
@@ -61,6 +61,16 @@
  <layer name="Слой тайлов 12" width="64" height="36">
   <data encoding="base64" compression="zlib">
    eJzt1lENgDAMBNBudsAMWAMzoI4Z4Jcu9D0FvVxyaQQAfGfpEWvPviLPNrLvhfMDNdl+2w/wJ0eLOFv2FXmukf0unD+Lf6r2P6X/OfrXwxw9AADw7gEPogep
+  </data>
+ </layer>
+ <layer name="Слой тайлов 13" width="64" height="36">
+  <data encoding="base64" compression="zlib">
+   eJzt1bkNgDAMRmFnPI41ODqONTgaWAam41/ADUIBkfdJTyktF5HNAAAAAOC+LZjtwX//7tCOZ/BfAM/L9LdyVagywX/WaedeDWpMcP9K1apRbYR53l17685NalaLWiPM8+4adw4AAAAAgG+5AHDuGRM=
+  </data>
+ </layer>
+ <layer name="Слой тайлов 14" width="64" height="36">
+  <data encoding="base64" compression="zlib">
+   eJzt1kmOAXEUx/FSt0DvDBvuoNkZNtyhtZ3hGoad4Rrd7AzX0NyF9rWoBCmJWPyfqN8n+aZSK++9RYXniYiIiIjIs3L+dXnfeiK36v51jZv9L28SdqN3v9nlTcJuFHYzeUw55nkVqlItZj2Ne2127lCXehHcf8zOE5rSLIL7L9l5RWvaONg/+Fbfe7674Ft97+lanBKUpA/3P2+uQJ9UpJLtKCa+qEnf1DKexUKfBjSkkfEsIoEf+qU5LYxnsbClP9rR3ngWCwc60v/5JYL/S1PsnKYMZSO4v4iIyKs5AWmEIU4=
   </data>
  </layer>
  <objectgroup name="obstacles">
@@ -142,12 +152,6 @@
   <object id="478" x="480" y="1056">
    <polygon points="0,0 1252,0 1230,66 40,68 -6,34"/>
   </object>
-  <object id="479" x="610" y="666">
-   <polygon points="0,0 834,-2 834,-88 -4,-88"/>
-  </object>
-  <object id="480" x="926" y="384">
-   <polygon points="0,0 2,42 50,62 326,60 318,2"/>
-  </object>
   <object id="481" x="930" y="198">
    <polygon points="0,0 -2,56 384,60 384,-10"/>
   </object>
@@ -157,17 +161,8 @@
   <object id="483" x="1330.67" y="204">
    <polygon points="0,0 -21.3333,34.6667 -8,80 41.3333,90.6667 104,60 106.667,14.6667 88,-8 32,-10.6667"/>
   </object>
-  <object id="484" x="608" y="578.667">
-   <polygon points="0,0 17.3333,-21.3333 54.6667,-33.3333 118.667,-22.6667 129.333,0 124,36 53.3333,53.3333 17.3333,54.6667"/>
-  </object>
   <object id="485" x="1337.33" y="572">
    <polygon points="0,0 20,-26.6667 66.6667,-28 121.333,17.3333 134.667,52 113.333,89.3333 56,85.3333 0,62.6667"/>
-  </object>
-  <object id="486" x="606.667" y="798.667">
-   <polygon points="0,0 0,89.3333 64,93.3333 68,-1.33333"/>
-  </object>
-  <object id="487" x="638.667" y="921.333">
-   <polygon points="0,0 160,4 158.667,-109.333 69.3333,-121.333 30.6667,-102.667 -2.66667,-42.6667"/>
   </object>
   <object id="488" x="228" y="1066.67">
    <polygon points="0,0 -1.33333,42.6667 21.3333,54.6667 50.6667,40 61.3333,-14.6667 22.6667,-13.3333"/>
@@ -237,6 +232,18 @@
   </object>
   <object id="510" x="2018" y="801">
    <polygon points="0,0 -2,-462 16,-481 60.7879,-482.818 60.7879,5.06061"/>
+  </object>
+  <object id="512" x="626" y="364">
+   <polygon points="10,10 52,82 616,76 620,18"/>
+  </object>
+  <object id="513" x="458" y="578">
+   <polygon points="0,0 -2,92 980,90 996,-2"/>
+  </object>
+  <object id="514" x="610" y="800">
+   <polygon points="0,0 2,118 372,122 414,0"/>
+  </object>
+  <object id="515" x="1634" y="454">
+   <polygon points="0,0 114,0 126,248 104,274 28,276 -2,250"/>
   </object>
  </objectgroup>
 </map>
