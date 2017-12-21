@@ -38,8 +38,14 @@ public class RuleSet {
 
         Array<FuzzyFunction> leftTrackFuns = new Array<>();
         Array<FuzzyFunction> rightTrackFuns = new Array<>();
+        int i = 0;
         for (Rule r: rules){
+            i+=1;
             Array<FuzzyFunction> ruleRes = r.apply(distances, direction);
+
+            if (ruleRes.get(0) != Rule.zeroFunction)
+                System.out.println("Rule " + i + " is apply");
+
             leftTrackFuns.add(ruleRes.get(0));
             rightTrackFuns.add(ruleRes.get(1));
         }
@@ -182,7 +188,7 @@ public class RuleSet {
             }
         });
 
-        //2.2) 1-mid, 2 - mid, 3 - low, td==R  -> L=1, R=1
+        //3) 1-mid, 2 - mid, 3 - low, td==R  -> L=1, R=2
         //                                  else L = 1, R = 2
         rules.add( new Rule(){
             @Override
@@ -209,7 +215,7 @@ public class RuleSet {
             }
         });
 
-        //3) 1- mid, 2- low, 3 - mid -> TD = 0, -TD = 1
+        //4 1- mid, 2- low, 3 - mid -> TD = 0, -TD = 2
         rules.add( new Rule() {
             @Override
             public Array<FuzzyFunction> apply(Array<Float> distances, Direction direction) {
@@ -224,10 +230,10 @@ public class RuleSet {
                 if (direction == Direction.LEFT)
                 {
                     powers.add(topBound(ruleValue, trackFuns.get(0)));
-                    powers.add(topBound(ruleValue, trackFuns.get(1)));
+                    powers.add(topBound(ruleValue, trackFuns.get(2)));
                 }
                 else{
-                    powers.add(topBound(ruleValue, trackFuns.get(1)));
+                    powers.add(topBound(ruleValue, trackFuns.get(2)));
                     powers.add(topBound(ruleValue, trackFuns.get(0)));
                 }
 
@@ -235,7 +241,7 @@ public class RuleSet {
             }
         } );
 
-        //3 invert) 1- low, 2- mid, 3 - low -> TD = 2, -TD = 2
+        //5 invert) 1- low, 2- mid, 3 - low -> TD = 2, -TD = 2
         rules.add( new Rule() {
             @Override
             public Array<FuzzyFunction> apply(Array<Float> distances, Direction direction) {
@@ -255,7 +261,7 @@ public class RuleSet {
         } );
 
 
-        //4) 1 - low, 2 - low, 3 - mid -> L= 1, R= 0
+        //6) 1 - low, 2 - low, 3 - mid -> L= 2, R= 0
         rules.add( new Rule() {
             @Override
             public Array<FuzzyFunction> apply(Array<Float> distances, Direction direction) {
@@ -267,14 +273,14 @@ public class RuleSet {
 
                 Array<FuzzyFunction> powers = new Array<>();
 
-                powers.add(topBound(ruleValue, trackFuns.get(1)));
+                powers.add(topBound(ruleValue, trackFuns.get(2)));
                 powers.add(topBound(ruleValue, trackFuns.get(0)));
 
                 return powers;
             }
         } );
 
-        //4.2) 1 - mid, 2 - low, 3 - low -> L= 1, R= 0
+        //7) 1 - mid, 2 - low, 3 - low -> L= 0, R= 2
         rules.add( new Rule() {
             @Override
             public Array<FuzzyFunction> apply(Array<Float> distances, Direction direction) {
@@ -287,13 +293,13 @@ public class RuleSet {
                 Array<FuzzyFunction> powers = new Array<>();
 
                 powers.add(topBound(ruleValue, trackFuns.get(0)));
-                powers.add(topBound(ruleValue, trackFuns.get(1)));
+                powers.add(topBound(ruleValue, trackFuns.get(2)));
 
                 return powers;
             }
         } );
 
-        //5) 1,2,3 - low, TD = 0, -TD = 1
+        //8) 1,2,3 - low, TD = 0, -TD = 1
         rules.add( new Rule() {
             @Override
             public Array<FuzzyFunction> apply(Array<Float> distances, Direction direction) {

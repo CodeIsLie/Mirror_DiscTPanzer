@@ -9,8 +9,8 @@ public class FunctionSet {
         Array<FuzzyFunction> funs = new Array<>();
 
         //контрольные значения дистанций
-        final float d1 = 45;
-        final float d2 = (maxRange < 120) ? maxRange : 120;
+        final float d1 = 55;
+        final float d2 = 100;
 
         //final double d3 = 60;
         //final double d4 = 80;
@@ -60,7 +60,7 @@ public class FunctionSet {
         Array<FuzzyFunction> funs = new Array<>();
 
         final float speed1 = 30;
-        final float speed2 = 90;
+        final float speed2 = 85;
         final float speed3 = 100;
         final float speed4 = 150;
 

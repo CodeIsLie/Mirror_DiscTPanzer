@@ -40,7 +40,7 @@ public abstract class Rule {
         };
     }
 
-    static private FuzzyFunction zeroFunction = new FuzzyFunction(){
+    static public FuzzyFunction zeroFunction = new FuzzyFunction(){
             @Override
             public float fun(float x){
                 return 0;
