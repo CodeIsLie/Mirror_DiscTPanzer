@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="64" height="36" tilewidth="32" tileheight="32" nextobjectid="406">
+<map version="1.0" tiledversion="2017.07.17" orientation="orthogonal" renderorder="right-down" width="64" height="36" tilewidth="32" tileheight="32" nextobjectid="411">
  <tileset firstgid="1" name="grassmap" tilewidth="32" tileheight="32" tilecount="384" columns="24">
   <image source="grassmap.png" width="768" height="512"/>
  </tileset>
@@ -382,6 +382,21 @@
   </object>
   <object id="405" x="2046" y="-28">
    <polygon points="0,0 0,1190 22,1190 34,-6"/>
+  </object>
+  <object id="406" x="1408" y="0">
+   <polygon points="0,0 -160,96 -400,400 -368,472 -256,496 328,0"/>
+  </object>
+  <object id="407" x="1008" y="640">
+   <polygon points="0,0 -8,216 224,512 432,512 304,176"/>
+  </object>
+  <object id="408" x="1680" y="632">
+   <polygon points="0,0 -112,224 -112,352 -48,368 104,272 320,-16 200,-128"/>
+  </object>
+  <object id="409" x="184" y="1072">
+   <polygon points="0,0 72,-792 488,-920 568,-864"/>
+  </object>
+  <object id="410" x="184" y="1072">
+   <polygon points="0,0 144,88 992,80 344,-512"/>
   </object>
  </objectgroup>
 </map>

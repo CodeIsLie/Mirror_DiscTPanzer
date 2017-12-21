@@ -22,8 +22,8 @@ public class RuleSet {
         System.out.println(Settings.getSensorRange());
     }
 
-    // Массив значений - 2 значения, нагрузка на левую и правую функцию
-    Array<Float> apply(Array<Sensor> sensors){
+    // Вектор значений - 2 значения, нагрузка на левую и правую функцию
+    Vector2 apply(Array<Sensor> sensors){
         Array<Float> distances = new Array<>();
 
         float dist1 = !sensors.get(0).seeingObject() ? Float.POSITIVE_INFINITY : sensors.get(0).getRange();
@@ -50,11 +50,7 @@ public class RuleSet {
         float leftPower = massCentre(leftTrackSummaryFun,0, 200, 1000);
         float rightPower = massCentre(rightTrackSummaryFun, 0, 200, 1000);
 
-        Array<Float> powers = new Array<Float>();
-        powers.add(leftPower);
-        powers.add(rightPower);
-
-        return powers;
+        return new Vector2(leftPower, rightPower);
     }
 
     private void updateDirection(){

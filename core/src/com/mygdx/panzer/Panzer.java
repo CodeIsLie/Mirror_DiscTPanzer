@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.Array;
 
 public class Panzer {
 
-
+    private static final float RULE_FREQ = 0.05f;
     private static final int SENSOR_COUNT = 3;
 
     private Vector2 position = new Vector2(0,0);
@@ -26,8 +26,9 @@ public class Panzer {
     private Texture panzerImage;
     private Vector2 panzerSize;
     private Array<Sensor> sensors = new Array<>();
-
+    private float timePassed = 0;
     private RuleSet ruleSet;
+    private Vector2 lastRulePower = new Vector2(0, 0);
 
     public Panzer(float startAngle) {
         this.angle = startAngle;
@@ -61,10 +62,12 @@ public class Panzer {
     }
 
     public void updatePosition(float delta) {
-        // Скорость - пиксели в секунду
-        Array<Float> powers = ruleSet.apply(sensors);
-        float leftMove = powers.get(0);
-        float rightMove = powers.get(1);
+        timePassed += delta;
+        // Через константый промежуток времени применяем новое правило
+        if (timePassed >= RULE_FREQ) {
+            timePassed = 0;
+            lastRulePower = ruleSet.apply(sensors);
+        }
 
         //System.out.println("left power is " + leftMove);
         //System.out.println("right power is " + rightMove);
@@ -72,10 +75,10 @@ public class Panzer {
 
         //System.out.println("левое значение " + leftMove + " правое значение " + rightMove);
 
-
+        // Скорость - пиксели в секунду
         calculateMotion(
-                leftMove * (delta / 1) * Settings.getMaxSpeed(),
-                rightMove * (delta / 1) * Settings.getMaxSpeed());
+                lastRulePower.x * (delta / 1) * Settings.getMaxSpeed(),
+                lastRulePower.y * (delta / 1) * Settings.getMaxSpeed());
         for (Sensor sensor: sensors) {
             sensor.update(delta);
         }
