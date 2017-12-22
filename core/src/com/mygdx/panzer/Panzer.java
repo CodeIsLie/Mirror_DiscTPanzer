@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.Array;
 
 public class Panzer {
 
-    private static final float RULE_FREQ = 0.05f;
+    private static final float RULE_FREQ = 0.00001f;
     private static final int SENSOR_COUNT = 3;
 
     private Vector2 position = new Vector2(0,0);
