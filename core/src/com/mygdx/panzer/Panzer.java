@@ -2,8 +2,11 @@ package com.mygdx.panzer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -15,15 +18,18 @@ import com.badlogic.gdx.utils.Array;
 
 public class Panzer {
 
+    private static final float FRAME_TIME = 0.3f;
     private static final float RULE_FREQ = 0.00001f;
     private static final int SENSOR_COUNT = 3;
 
     private Vector2 position = new Vector2(0,0);
     // В градусах
     private float angle = 0;
+    private Animation animation;
+    private float frameTime;
     private Polygon physBody;
     public Sprite panzerSprite;
-    private Texture panzerImage;
+    private TextureRegion panzerImage;
     private Vector2 panzerSize;
     private Array<Sensor> sensors = new Array<>();
     private float timePassed = 0;
@@ -32,11 +38,17 @@ public class Panzer {
 
     public Panzer(float startAngle) {
         this.angle = startAngle;
-        panzerImage = new Texture(Gdx.files.internal("maps/panzer.png"));
-        panzerSize = new Vector2(panzerImage.getWidth(), panzerImage.getHeight());
+        String texturePath = "maps/truck.png";
+        Array<GridPoint2> points = new Array<>();
+        points.add(new GridPoint2(0, 0));
+        points.add(new GridPoint2(0, 1));
+        points.add(new GridPoint2(0, 2));
+        animation = loadAnimation(texturePath, points, FRAME_TIME);
+        panzerImage = (TextureRegion) animation.getKeyFrame(frameTime);
+        panzerSize = new Vector2(panzerImage.getRegionWidth(), panzerImage.getRegionHeight());
         panzerSprite = new Sprite(panzerImage);
-        int deltaX = panzerImage.getWidth() / 2;
-        int deltaY = panzerImage.getHeight() / 2;
+        int deltaX = panzerImage.getRegionWidth() / 2;
+        int deltaY = panzerImage.getRegionHeight() / 2;
         Settings.setFinishPos(new Vector2(Settings.WORLD_WIDTH - deltaX, Settings.WORLD_HEIGHT - deltaY));
 
         physBody = new Polygon();
@@ -54,6 +66,19 @@ public class Panzer {
         physBody.setOrigin(panzerSize.x / 2,panzerSize.y / 2);
         physBody.setRotation(startAngle);
         ruleSet = new RuleSet(RuleSet.getRules(), this);
+    }
+
+    private Animation loadAnimation(String textureName, Array<GridPoint2> points, float frameDuration) {
+        Texture texture = new Texture(textureName);
+        Vector2 size = new Vector2(128, 64);
+        TextureRegion[][] textureFrames = TextureRegion.split(texture, (int) size.x, (int) size.y);
+
+        Array<TextureRegion> animationKeyFrames = new Array<>(points.size);
+
+        for (GridPoint2 point : points) {
+            animationKeyFrames.add(textureFrames[point.x][point.y]);
+        }
+        return new Animation(frameDuration, animationKeyFrames, Animation.PlayMode.LOOP);
     }
 
     public void setPosition(int x, int y) {
@@ -124,7 +149,10 @@ public class Panzer {
     }
 
 
-    public void draw(Batch batch){
+    public void draw(Batch batch, float delta){
+        frameTime = (frameTime + delta) % (FRAME_TIME * 100);
+        panzerImage = (TextureRegion) animation.getKeyFrame(frameTime);
+        panzerSprite = new Sprite(panzerImage);
         panzerSprite.setRotation(angle);
         panzerSprite.setCenter(position.x, position.y);
         batch.begin();
@@ -133,7 +161,7 @@ public class Panzer {
     }
 
     public void dispose() {
-        panzerImage.dispose();
+        panzerImage.getTexture().dispose();
     }
 
     public Vector2 getPosition() {

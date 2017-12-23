@@ -44,10 +44,6 @@ public class ProcessScreen extends ScreenAdapter {
     private FitViewport viewport;
 
     private PanzerHUD hud;
-
-    private static final int PIXELS_PER_TILE = 32;
-    private static final float HALF = 0.5f;
-
     public Panzer panzer;
 
     public ProcessScreen(PanzerProject game) {
@@ -99,7 +95,7 @@ public class ProcessScreen extends ScreenAdapter {
         }
         if (hud.isPanzInFinish())
             game.setProcessState(ProcessState.FINISHED);
-        panzer.draw(batch);
+        panzer.draw(batch, delta);
         hud.render(delta);
     }
 

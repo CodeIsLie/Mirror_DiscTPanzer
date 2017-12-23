@@ -60,9 +60,9 @@ public class FunctionSet {
         Array<FuzzyFunction> funs = new Array<>();
 
         final float speed1 = 30;
-        final float speed2 = 85;
+        final float speed2 = 60;
         final float speed3 = 100;
-        final float speed4 = 150;
+        final float speed4 = 180;
 
         funs.add(new FuzzyFunction() {
             @Override
