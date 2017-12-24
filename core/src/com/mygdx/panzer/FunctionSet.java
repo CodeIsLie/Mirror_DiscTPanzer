@@ -10,7 +10,7 @@ public class FunctionSet {
 
         //контрольные значения дистанций
         final float d1 = 55;
-        final float d2 = 100;
+        final float d2 = 85;
 
         //final double d3 = 60;
         //final double d4 = 80;
@@ -63,7 +63,11 @@ public class FunctionSet {
         final float speed2 = 60;
         final float speed3 = 100;
         final float speed4 = 180;
+        final float speed5 = 280;
+        final float speed6 = 480;
+        final float speed7 = 780;
 
+        // 0
         funs.add(new FuzzyFunction() {
             @Override
             public float fun(float x) {
@@ -75,6 +79,7 @@ public class FunctionSet {
             }
         });
 
+        // 1
         funs.add(new FuzzyFunction() {
             @Override
             public float fun(float x) {
@@ -89,6 +94,7 @@ public class FunctionSet {
             }
         });
 
+        // 2
         funs.add(new FuzzyFunction() {
             @Override
             public float fun(float x) {
@@ -97,6 +103,51 @@ public class FunctionSet {
                 else if (x < speed3)
                     return (x - speed2)/(speed3 - speed2);
                 else if (x < speed4)
+                    return 1;
+                else
+                    return 0;
+            }
+        });
+
+        // 3
+        funs.add(new FuzzyFunction() {
+            @Override
+            public float fun(float x) {
+                if (x < speed3)
+                    return 0;
+                else if (x < speed4)
+                    return (x - speed3)/(speed4 - speed3);
+                else if (x < speed5)
+                    return 1;
+                else
+                    return 0;
+            }
+        });
+
+        // 4
+        funs.add(new FuzzyFunction() {
+            @Override
+            public float fun(float x) {
+                if (x < speed4)
+                    return 0;
+                else if (x < speed5)
+                    return (x - speed4)/(speed5 - speed4);
+                else if (x < speed6)
+                    return 1;
+                else
+                    return 0;
+            }
+        });
+
+        // 5
+        funs.add(new FuzzyFunction() {
+            @Override
+            public float fun(float x) {
+                if (x < speed5)
+                    return 0;
+                else if (x < speed6)
+                    return (x - speed5)/(speed6 - speed5);
+                else if (x < speed7)
                     return 1;
                 else
                     return 0;
