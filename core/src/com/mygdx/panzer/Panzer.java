@@ -1,6 +1,5 @@
 package com.mygdx.panzer;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -19,14 +18,14 @@ import com.badlogic.gdx.utils.Array;
 public class Panzer {
 
     private static final float FRAME_TIME = 0.3f;
-    private static final float RULE_FREQ = 0.00001f;
+    private static final float DEFAULT_RULE_FREQ = 0.00001f;
     private static final int SENSOR_COUNT = 3;
 
     private Vector2 position = new Vector2(0,0);
-    // В градусах
+    private float frameTime;
     private float angle = 0;
     private Animation animation;
-    private float frameTime;
+    private float ruleFreq = DEFAULT_RULE_FREQ;
     private Polygon physBody;
     public Sprite panzerSprite;
     private TextureRegion panzerImage;
@@ -93,7 +92,7 @@ public class Panzer {
     public void updatePosition(float delta) {
         timePassed += delta;
         // Через константый промежуток времени применяем новое правило
-        if (timePassed >= RULE_FREQ) {
+        if (timePassed >= ruleFreq) {
             timePassed = 0;
             lastRulePower = ruleSet.apply(sensors);
         }
@@ -104,6 +103,15 @@ public class Panzer {
 
         //System.out.println("левое значение " + leftMove + " правое значение " + rightMove);
 
+        if (timePassed == 0) {
+            float powerRatio = lastRulePower.x > lastRulePower.y
+                    ? lastRulePower.x / lastRulePower.y
+                    : lastRulePower.y / lastRulePower.x;
+
+            if (powerRatio > 10) {
+                ruleFreq = 0.07f;
+            }
+        }
         // Скорость - пиксели в секунду
         calculateMotion(
                 lastRulePower.x * (delta / 1) * Settings.getMaxSpeed(),
