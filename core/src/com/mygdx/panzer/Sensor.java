@@ -76,7 +76,13 @@ public class Sensor {
         x = range * Math.cos(sum_angle);
         y = range * Math.sin(sum_angle);
         intersectPoint = new Vector2((float)(x + sensorBegin.x), (float)y + (sensorBegin.y));
-        range -= panzer.panzerSprite.getWidth() / 2;
+        float rangeToSub;
+        if (angle == 0) {
+            rangeToSub = panzer.getPanzerSize().x / 2;
+        } else {
+            rangeToSub = (panzer.getPanzerSize().y / 2) / (float)Math.sin(Math.abs(angle));
+        }
+        range -= rangeToSub;
         debugMessage();
     }
 
