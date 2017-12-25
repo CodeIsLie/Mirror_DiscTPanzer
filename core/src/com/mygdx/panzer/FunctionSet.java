@@ -2,25 +2,22 @@ package com.mygdx.panzer;
 
 import com.badlogic.gdx.utils.Array;
 
-import java.util.Map;
-import java.util.TreeMap;
-
 //в этом классе будет происходить инициализация всех наших функций
 public class FunctionSet {
 
-    public static Map<String, FuzzyFunction> getSensorFuns(float maxRange){
-        Map<String, FuzzyFunction> funs = new TreeMap<>();
+    public static Array<FuzzyFunction> getSensorFuns(float maxRange){
+        Array<FuzzyFunction> funs = new Array<>();
 
         //контрольные значения дистанций
-        final float d1 = 55;
-        final float d2 = 95;
+        final float d1 = 40;
+        final float d2 = 85;
 
         //final double d3 = 60;
         //final double d4 = 80;
         //double d5 = 50;
 
         //близко
-        funs.put("low", new FuzzyFunction() {
+        funs.add(new FuzzyFunction() {
             @Override
             public float fun(float x) {
                 if (x < d1){
@@ -33,7 +30,7 @@ public class FunctionSet {
             }
         });
         //средне
-        funs.put("mid", new FuzzyFunction() {
+        funs.add(new FuzzyFunction() {
             @Override
             public float fun(float x) {
                 if (x < d1)
@@ -59,30 +56,19 @@ public class FunctionSet {
         return funs;
     }
 
-    public static int getMaxSpeed(){ return 300; }
-
-    public static int getMinSpeed(){ return 0; }
-
-    public static Map<String, FuzzyFunction> getTrackFuns(float maxSpeed){
-        Map<String, FuzzyFunction> funs = new TreeMap<>();
-
+    public static Array<FuzzyFunction> getTrackFuns(float maxSpeed){
+        Array<FuzzyFunction> funs = new Array<>();
 
         final float speed1 = 30;
         final float speed2 = 60;
         final float speed3 = 100;
-        final float speed4 = 150;
-        final float speed5 = 200;
-        final float speed6 = 240;
-        final float speed7 = getMaxSpeed();
+        final float speed4 = 180;
+        final float speed5 = 250;
+        final float speed6 = 400;
+        final float speed7 = 600;
 
-        /*funs.put("reverseS", new FuzzyFunction() {
-            @Override
-            public float fun(float x) {
-
-            }
-        })*/
-
-        funs.put("veryS", new FuzzyFunction() {
+        // 0
+        funs.add(new FuzzyFunction() {
             @Override
             public float fun(float x) {
                 float k = x/speed1;
@@ -94,7 +80,7 @@ public class FunctionSet {
         });
 
         // 1
-        funs.put("slow", new FuzzyFunction() {
+        funs.add(new FuzzyFunction() {
             @Override
             public float fun(float x) {
                 if (x < speed1)
@@ -109,7 +95,7 @@ public class FunctionSet {
         });
 
         // 2
-        funs.put("mid", new FuzzyFunction() {
+        funs.add(new FuzzyFunction() {
             @Override
             public float fun(float x) {
                 if (x < speed2)
@@ -124,7 +110,7 @@ public class FunctionSet {
         });
 
         // 3
-        funs.put("fast", new FuzzyFunction() {
+        funs.add(new FuzzyFunction() {
             @Override
             public float fun(float x) {
                 if (x < speed3)
@@ -139,7 +125,7 @@ public class FunctionSet {
         });
 
         // 4
-        funs.put("veryF", new FuzzyFunction() {
+        funs.add(new FuzzyFunction() {
             @Override
             public float fun(float x) {
                 if (x < speed4)
@@ -153,7 +139,7 @@ public class FunctionSet {
             }
         });
 
-        /*
+        // 5
         funs.add(new FuzzyFunction() {
             @Override
             public float fun(float x) {
@@ -167,7 +153,6 @@ public class FunctionSet {
                     return 0;
             }
         });
-        */
 
         return funs;
     }
