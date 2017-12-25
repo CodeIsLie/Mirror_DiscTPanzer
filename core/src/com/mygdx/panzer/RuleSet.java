@@ -3,6 +3,8 @@ package com.mygdx.panzer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import java.util.Map;
+
 
 public class RuleSet {
     private Array<Rule> rules;
@@ -53,8 +55,8 @@ public class RuleSet {
         FuzzyFunction leftTrackSummaryFun = combine(leftTrackFuns);
         FuzzyFunction rightTrackSummaryFun = combine(rightTrackFuns);
 
-        float leftPower = massCentre(leftTrackSummaryFun,0, 200, 1000);
-        float rightPower = massCentre(rightTrackSummaryFun, 0, 200, 1000);
+        float leftPower = massCentre(leftTrackSummaryFun, FunctionSet.getMinSpeed(), FunctionSet.getMaxSpeed(), 1000);
+        float rightPower = massCentre(rightTrackSummaryFun, FunctionSet.getMinSpeed(), FunctionSet.getMaxSpeed(), 1000);
 
         return new Vector2(leftPower, rightPower);
     }
@@ -132,20 +134,21 @@ public class RuleSet {
     //здесь будет находиться инициализация всех правил
     public static Array<Rule> getRules(){
         Array<Rule> rules = new Array<>();
-        final Array<FuzzyFunction> trackFuns = FunctionSet.getTrackFuns(Settings.getMaxSpeed());
-        final Array<FuzzyFunction> sensorFuns = FunctionSet.getSensorFuns(Settings.getSensorRange());
+
+        final Map<String, FuzzyFunction> trackFuns = FunctionSet.getTrackFuns(Settings.getMaxSpeed());
+        final Map<String, FuzzyFunction> sensorFuns = FunctionSet.getSensorFuns(Settings.getSensorRange());
 
         //1) 1,2,3 = mid -> td = 1, -td = 2
         rules.add( new Rule() {
             @Override
             public Array<FuzzyFunction> apply(Array<Float> distances, Direction direction) {
-                float v1 = sensorFuns.get(1).fun(distances.get(0));
-                float v2 = sensorFuns.get(1).fun(distances.get(1));
-                float v3 = sensorFuns.get(1).fun(distances.get(2));
+                float v1 = sensorFuns.get("mid").fun(distances.get(0));
+                float v2 = sensorFuns.get("mid").fun(distances.get(1));
+                float v3 = sensorFuns.get("mid").fun(distances.get(2));
 
                 float ruleValue = Math.min(v1, Math.min(v2, v3));
-                FuzzyFunction first = topBound(ruleValue, trackFuns.get(1));
-                FuzzyFunction second = topBound(ruleValue, trackFuns.get(2));
+                FuzzyFunction first = topBound(ruleValue, trackFuns.get("slow"));
+                FuzzyFunction second = topBound(ruleValue, trackFuns.get("mid"));
                 Array<FuzzyFunction> powers = new Array<>();
 
                 if (direction == Direction.LEFT)
@@ -166,9 +169,9 @@ public class RuleSet {
         rules.add( new Rule(){
             @Override
             public Array<FuzzyFunction> apply(Array<Float> distances, Direction direction) {
-                float v1 = sensorFuns.get(0).fun(distances.get(0));
-                float v2 = sensorFuns.get(1).fun(distances.get(1));
-                float v3 = sensorFuns.get(1).fun(distances.get(2));
+                float v1 = sensorFuns.get("low").fun(distances.get(0));
+                float v2 = sensorFuns.get("mid").fun(distances.get(1));
+                float v3 = sensorFuns.get("mid").fun(distances.get(2));
 
                 float ruleValue = Math.min(v1, Math.min(v2, v3));
 
@@ -176,12 +179,12 @@ public class RuleSet {
 
                 if (direction == Direction.LEFT)
                 {
-                    powers.add(topBound(ruleValue, trackFuns.get(2)));
-                    powers.add(topBound(ruleValue, trackFuns.get(1)));
+                    powers.add(topBound(ruleValue, trackFuns.get("mid")));
+                    powers.add(topBound(ruleValue, trackFuns.get("slow")));
                 }
                 else{
-                    powers.add(topBound(ruleValue, trackFuns.get(2)));
-                    powers.add(topBound(ruleValue, trackFuns.get(1)));
+                    powers.add(topBound(ruleValue, trackFuns.get("mid")));
+                    powers.add(topBound(ruleValue, trackFuns.get("slow")));
                 }
 
                 return powers;
@@ -193,9 +196,9 @@ public class RuleSet {
         rules.add( new Rule(){
             @Override
             public Array<FuzzyFunction> apply(Array<Float> distances, Direction direction) {
-                float v1 = sensorFuns.get(1).fun(distances.get(0));
-                float v2 = sensorFuns.get(1).fun(distances.get(1));
-                float v3 = sensorFuns.get(0).fun(distances.get(2));
+                float v1 = sensorFuns.get("mid").fun(distances.get(0));
+                float v2 = sensorFuns.get("mid").fun(distances.get(1));
+                float v3 = sensorFuns.get("low").fun(distances.get(2));
 
                 float ruleValue = Math.min(v1, Math.min(v2, v3));
 
@@ -203,12 +206,12 @@ public class RuleSet {
 
                 if (direction == Direction.LEFT)
                 {
-                    powers.add(topBound(ruleValue, trackFuns.get(1)));
-                    powers.add(topBound(ruleValue, trackFuns.get(2)));
+                    powers.add(topBound(ruleValue, trackFuns.get("slow")));
+                    powers.add(topBound(ruleValue, trackFuns.get("mid")));
                 }
                 else{
-                    powers.add(topBound(ruleValue, trackFuns.get(1)));
-                    powers.add(topBound(ruleValue, trackFuns.get(2)));
+                    powers.add(topBound(ruleValue, trackFuns.get("slow")));
+                    powers.add(topBound(ruleValue, trackFuns.get("mid")));
                 }
 
                 return powers;
@@ -219,9 +222,9 @@ public class RuleSet {
         rules.add( new Rule() {
             @Override
             public Array<FuzzyFunction> apply(Array<Float> distances, Direction direction) {
-                float v1 = sensorFuns.get(1).fun(distances.get(0));
-                float v2 = sensorFuns.get(0).fun(distances.get(1));
-                float v3 = sensorFuns.get(1).fun(distances.get(2));
+                float v1 = sensorFuns.get("mid").fun(distances.get(0));
+                float v2 = sensorFuns.get("low").fun(distances.get(1));
+                float v3 = sensorFuns.get("mid").fun(distances.get(2));
 
                 float ruleValue = Math.min(v1, Math.min(v2, v3));
 
@@ -229,12 +232,12 @@ public class RuleSet {
 
                 if (direction == Direction.LEFT)
                 {
-                    powers.add(topBound(ruleValue, trackFuns.get(0)));
-                    powers.add(topBound(ruleValue, trackFuns.get(2)));
+                    powers.add(topBound(ruleValue, trackFuns.get("veryS")));
+                    powers.add(topBound(ruleValue, trackFuns.get("mid")));
                 }
                 else{
-                    powers.add(topBound(ruleValue, trackFuns.get(2)));
-                    powers.add(topBound(ruleValue, trackFuns.get(0)));
+                    powers.add(topBound(ruleValue, trackFuns.get("mid")));
+                    powers.add(topBound(ruleValue, trackFuns.get("veryS")));
                 }
 
                 return powers;
@@ -245,16 +248,16 @@ public class RuleSet {
         rules.add( new Rule() {
             @Override
             public Array<FuzzyFunction> apply(Array<Float> distances, Direction direction) {
-                float v1 = sensorFuns.get(0).fun(distances.get(0));
-                float v2 = sensorFuns.get(1).fun(distances.get(1));
-                float v3 = sensorFuns.get(0).fun(distances.get(2));
+                float v1 = sensorFuns.get("low").fun(distances.get(0));
+                float v2 = sensorFuns.get("mid").fun(distances.get(1));
+                float v3 = sensorFuns.get("low").fun(distances.get(2));
 
                 float ruleValue = Math.min(v1, Math.min(v2, v3));
 
                 Array<FuzzyFunction> powers = new Array<>();
 
-                powers.add(topBound(ruleValue, trackFuns.get(2)));
-                powers.add(topBound(ruleValue, trackFuns.get(2)));
+                powers.add(topBound(ruleValue, trackFuns.get("mid")));
+                powers.add(topBound(ruleValue, trackFuns.get("mid")));
 
                 return powers;
             }
@@ -265,16 +268,16 @@ public class RuleSet {
         rules.add( new Rule() {
             @Override
             public Array<FuzzyFunction> apply(Array<Float> distances, Direction direction) {
-                float v1 = sensorFuns.get(0).fun(distances.get(0));
-                float v2 = sensorFuns.get(0).fun(distances.get(1));
-                float v3 = sensorFuns.get(1).fun(distances.get(2));
+                float v1 = sensorFuns.get("low").fun(distances.get(0));
+                float v2 = sensorFuns.get("low").fun(distances.get(1));
+                float v3 = sensorFuns.get("mid").fun(distances.get(2));
 
                 float ruleValue = Math.min(v1, Math.min(v2, v3));
 
                 Array<FuzzyFunction> powers = new Array<>();
 
-                powers.add(topBound(ruleValue, trackFuns.get(2)));
-                powers.add(topBound(ruleValue, trackFuns.get(0)));
+                powers.add(topBound(ruleValue, trackFuns.get("mid")));
+                powers.add(topBound(ruleValue, trackFuns.get("veryS")));
 
                 return powers;
             }
@@ -284,16 +287,16 @@ public class RuleSet {
         rules.add( new Rule() {
             @Override
             public Array<FuzzyFunction> apply(Array<Float> distances, Direction direction) {
-                float v1 = sensorFuns.get(1).fun(distances.get(0));
-                float v2 = sensorFuns.get(0).fun(distances.get(1));
-                float v3 = sensorFuns.get(0).fun(distances.get(2));
+                float v1 = sensorFuns.get("mid").fun(distances.get(0));
+                float v2 = sensorFuns.get("low").fun(distances.get(1));
+                float v3 = sensorFuns.get("low").fun(distances.get(2));
 
                 float ruleValue = Math.min(v1, Math.min(v2, v3));
 
                 Array<FuzzyFunction> powers = new Array<>();
 
-                powers.add(topBound(ruleValue, trackFuns.get(0)));
-                powers.add(topBound(ruleValue, trackFuns.get(2)));
+                powers.add(topBound(ruleValue, trackFuns.get("veryS")));
+                powers.add(topBound(ruleValue, trackFuns.get("mid")));
 
                 return powers;
             }
@@ -303,20 +306,20 @@ public class RuleSet {
         rules.add( new Rule() {
             @Override
             public Array<FuzzyFunction> apply(Array<Float> distances, Direction direction) {
-                float v1 = sensorFuns.get(0).fun(distances.get(0));
-                float v2 = sensorFuns.get(0).fun(distances.get(1));
-                float v3 = sensorFuns.get(0).fun(distances.get(2));
+                float v1 = sensorFuns.get("low").fun(distances.get(0));
+                float v2 = sensorFuns.get("low").fun(distances.get(1));
+                float v3 = sensorFuns.get("low").fun(distances.get(2));
 
                 float ruleValue = Math.min(v1, Math.min(v2, v3));
 
                 Array<FuzzyFunction> powers = new Array<>();
                 if (direction == Direction.LEFT){
-                    powers.add(topBound(ruleValue, trackFuns.get(0)));
-                    powers.add(topBound(ruleValue, trackFuns.get(1)));
+                    powers.add(topBound(ruleValue, trackFuns.get("veryS")));
+                    powers.add(topBound(ruleValue, trackFuns.get("slow")));
                 }
                 else{
-                    powers.add(topBound(ruleValue, trackFuns.get(1)));
-                    powers.add(topBound(ruleValue, trackFuns.get(0)));
+                    powers.add(topBound(ruleValue, trackFuns.get("slow")));
+                    powers.add(topBound(ruleValue, trackFuns.get("veryS")));
                 }
 
                 return powers;
