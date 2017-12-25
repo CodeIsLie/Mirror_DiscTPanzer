@@ -54,7 +54,13 @@ public class Panzer {
         Rectangle p = panzerSprite.getBoundingRectangle();
         Settings.setStartPos(new Vector2(p.getWidth() / 2, p.getHeight() / 2));
         for (int i = 0, sensorAngle = 45; i < SENSOR_COUNT; ++i, sensorAngle-=45) {
-            Sensor sensor = new Sensor(Settings.getSensorRange() + (int)panzerSize.x / 2, sensorAngle);
+            float rangeToSub;
+            if (sensorAngle == 0) {
+                rangeToSub = panzerSize.x / 2;
+            } else {
+                rangeToSub = (panzerSize.y / 2) / (float)Math.sin(Math.abs(sensorAngle));
+            }
+            Sensor sensor = new Sensor(Settings.getSensorRange() + (int)rangeToSub, sensorAngle);
             sensor.setDebugTag("SENSOR" + i);
             sensors.add(sensor);
         }

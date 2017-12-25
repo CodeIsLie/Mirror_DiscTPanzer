@@ -273,7 +273,7 @@ public class RuleSet {
 
                 Array<FuzzyFunction> powers = new Array<>();
 
-                powers.add(topBound(ruleValue, trackFuns.get(2)));
+                powers.add(topBound(ruleValue, trackFuns.get(3)));
                 powers.add(topBound(ruleValue, trackFuns.get(0)));
 
                 return powers;
@@ -293,7 +293,7 @@ public class RuleSet {
                 Array<FuzzyFunction> powers = new Array<>();
 
                 powers.add(topBound(ruleValue, trackFuns.get(0)));
-                powers.add(topBound(ruleValue, trackFuns.get(2)));
+                powers.add(topBound(ruleValue, trackFuns.get(3)));
 
                 return powers;
             }
@@ -315,8 +315,8 @@ public class RuleSet {
                     powers.add(topBound(ruleValue, trackFuns.get(1)));
                 }
                 else{
-                    powers.add(topBound(ruleValue, trackFuns.get(1)));
                     powers.add(topBound(ruleValue, trackFuns.get(0)));
+                    powers.add(topBound(ruleValue, trackFuns.get(1)));
                 }
 
                 return powers;
