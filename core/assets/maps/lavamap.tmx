@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="64" height="36" tilewidth="32" tileheight="32" nextobjectid="441">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="64" height="36" tilewidth="32" tileheight="32" nextobjectid="442">
  <tileset firstgid="1" name="lavamap" tilewidth="32" tileheight="32" tilecount="960" columns="40">
   <image source="lavamap.png" width="1280" height="768"/>
  </tileset>
@@ -36,6 +36,11 @@
  <layer name="Слой тайлов 7" width="64" height="36">
   <data encoding="base64" compression="zlib">
    eJzt1zdWQgEURdH/SxXtMaAI2JuYhxgwz0MFFdM8MKPoPBQx4zzMYlqcKdC819yz1u5ve4NAKaWU8mkMGYxjApOYQhbTjrusWsIyVpBDHqtYw7rfLLOK2MUe9nGAQxzh2HGXVRe4RAVXqOIaN7h13GXVM17wije84wOf+HLcZVU0DIJOdKEbPYihF32h9zqllFLKtxa0og0RtKPDdZFtgxjCMEYwirTrIttmMIs5zGMBi66LbCtgA5vYwjZ2XBfZVsIJTlHGGc5dF9l2h3s84BE1PLkusq2Ob/zgF3/4d11kW5wv2I8EkkhhQP9QKaWUUko1UQM5UDEP
+  </data>
+ </layer>
+ <layer name="Слой тайлов 8" width="64" height="36">
+  <data encoding="base64" compression="zlib">
+   eJztz8kNwjAABVGnBsLSSwjQC2HphbD0xNpLCFAC0wE3G8nzpLn/H4IkSZIkSZIkSZL025kudKUb3emRdFFcHT2ppxe96ZN0UVyDIoSShjSiMU2K1Kviqfg6pZpmNKdFRv+XfG1oRWva0Daj/zu+trSnAx3plNF/Sf/vC0YREe8=
   </data>
  </layer>
  <objectgroup name="obstacles">
@@ -107,6 +112,9 @@
   </object>
   <object id="439" x="886" y="826">
    <polygon points="0,0 -56,119 -56,163 -33,193 119,243 188,230 254,192 213,2 177,-12 32,-11"/>
+  </object>
+  <object id="441" x="738" y="988">
+   <polygon points="0,0 38,28 124,10 170,-82 138,-142 70,-166 -14,-182 -42,-94 -32,-26"/>
   </object>
  </objectgroup>
 </map>
