@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="64" height="36" tilewidth="32" tileheight="32" nextobjectid="531">
+<map version="1.0" tiledversion="2017.07.17" orientation="orthogonal" renderorder="right-down" width="64" height="36" tilewidth="32" tileheight="32" nextobjectid="531">
  <tileset firstgid="1" name="desertmap" tilewidth="32" tileheight="32" tilecount="608" columns="38">
   <image source="desertmap.png" width="1216" height="512"/>
  </tileset>
@@ -25,12 +25,12 @@
  </layer>
  <layer name="Слой тайлов 5" width="64" height="36">
   <data encoding="base64" compression="zlib">
-   eJzt2McNAjEQRmEvrRB6IZxpg9ALoY0FboQ2FrYXwqMDLO14bPF/0jtwweODQZoQRERE/sO85z2Bj3EVwoSmNKvszqnpQEc62R0TbcGdl7SiteH9G7rTg1q7Y6JtuPOWdrQ3vP+TXvT+fjA8J9aZWS50pZvhXH2+e0BDGmV0fxERERGR0tXeAzhrvAcQN7nuWVLJdc+SSq57llRS7Vl+eWe5/Q91+dtQ4jvrcuYS31mXM5e4zyxxZpHUPkgIMc4=
+   eJzt2MkNgCAUhGGsxaV/l15Qe3EZOzARHIn/l8yB23B4kLwQAAAAnuuVQRmVydzFISqzsiiruYvDpuzKcR0qbxeHWndulFbpfnh/AAAAIJfeXcAsugvAhj0Lexb2LPn3LHfm7Gv/UMq3ocQ5S9m5xDlL2bnEfWaJnYG3nU8NKS4=
   </data>
  </layer>
  <layer name="Слой тайлов 6" width="64" height="36">
   <data encoding="base64" compression="zlib">
-   eJzt2MEJgDAMQNEo6DK6h151D11ZR7GXghUKKqWJ9r9Lj01JSEpEgO/bKpG90o5CT1OLtLV2FKHB5WMsOCeLe/tq5P1PctG5Ouoz1lIstpRxPMnF5O6cE9x7N/5YbKni0PL1+BFixtqbsX/g+6Q/S/s3+D7pT0v/BsCK0vrCFX3hHeqGugEAS3Lv2c4szETN/ZCVmZgzD5r1FpMzD+wjAdzFvpt9998d2ZEX7w==
+   eJztmE0KwjAQhacFf6/i7y10q6jrXkDPlJtZtQfxuQioELE1JGPyPhiyack8ZpgXRoSQ/+dciNRF7Czi0StF+mXsLF5ZoR7rjGtyhPaTEv1tajFBH00D9pIrN595PGrRFFKNS6mWiAPC9e0Gd2493Ptt/q4+8ZWH5Qb9I+heIPYf9PvCd/6/coX+IXTPEbsA+rVxgf4BdM8Q8AsDzzRt/k/JY+GVpm6pX6PHpoCdk/bM7d1g56Q9Nb0bCNFCbnPhHc6FbrBv2DeEEKKJ0Hu2ZzR4Ysz9kBZPDFmHmP3mImQdtO0jCSF6SWnf3QXuu9PnDu6VJu8=
   </data>
  </layer>
  <layer name="Слой тайлов 7" width="64" height="36">
@@ -173,7 +173,7 @@
   <object id="501" x="1893.33" y="162.667">
    <polygon points="0,0 -4,-13.3333 5.33333,-30.6667 36,-36 52,-24 61.3333,16 44,26.6667 22.6667,24"/>
   </object>
-  <object id="502" x="1890.67" y="272">
+  <object id="502" x="1912" y="272">
    <polygon points="0,0 13.3333,-32 49.3333,-48 108,-36 117.333,-6.66667 117.333,21.3333 106.667,58.6667 12,50.6667"/>
   </object>
   <object id="503" x="1706" y="1050">
@@ -191,7 +191,7 @@
   <object id="507" x="1783" y="942">
    <polygon points="-14,1 -23,-34 -2,-70 40,-83 233,-80 235,2"/>
   </object>
-  <object id="508" x="1962" y="301">
+  <object id="508" x="2000" y="288">
    <polygon points="0,0 -9,21 -2,42 21,52 49,43 54,24 54,4 26,-10"/>
   </object>
   <object id="509" x="1988" y="856">

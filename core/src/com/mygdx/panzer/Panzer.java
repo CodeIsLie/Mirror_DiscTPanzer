@@ -18,6 +18,8 @@ import com.badlogic.gdx.utils.Array;
 public class Panzer {
 
     private static final float FRAME_TIME = 0.3f;
+    private static final float POWER_RATIO_BOUND = 10f;
+    private static final float TURN_RULE_FREQ = 0.15f;
     private static final float DEFAULT_RULE_FREQ = 0.00001f;
     private static final int SENSOR_COUNT = 3;
 
@@ -25,7 +27,7 @@ public class Panzer {
     private float frameTime;
     private float angle = 0;
     private Animation animation;
-    private float ruleFreq = DEFAULT_RULE_FREQ;
+    private float ruleFreq = 0;
     private Polygon physBody;
     public Sprite panzerSprite;
     private TextureRegion panzerImage;
@@ -108,8 +110,10 @@ public class Panzer {
                     ? lastRulePower.x / lastRulePower.y
                     : lastRulePower.y / lastRulePower.x;
 
-            if (powerRatio > 10) {
-                ruleFreq = 0.07f;
+            if (powerRatio > POWER_RATIO_BOUND) {
+                ruleFreq = TURN_RULE_FREQ;
+            } else {
+                ruleFreq = DEFAULT_RULE_FREQ;
             }
         }
         // Скорость - пиксели в секунду
