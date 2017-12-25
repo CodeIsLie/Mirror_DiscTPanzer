@@ -33,9 +33,9 @@
    eJzt07EJACAMRcFAxtH957O0tJIouZvg5UMiAICTkREzqyt2R0XPaxsA93X/t+73AwAAAADwjwUXfgKM
   </data>
  </layer>
- <layer name="gragon" width="64" height="36">
+ <layer name="Слой тайлов 7" width="64" height="36">
   <data encoding="base64" compression="zlib">
-   eJzt10lOQkEYReGCXSAIjtTVgDSKKwESQJkobIOEboKyDVCaCc026BkJhxluoCqk7km+5A3/mzd5z5j/fQSM+UQVtYDxri6bv/CNnof7p2yeYY6Fh/t96493fDy/56DrS9x0z+4HPHq6P87uBJ483Z9jdx4FT/crdS6JFNLI4BkvyOLV4V22K6KEMt7wjorLgyxVv3huoIkW2ug4uchufQzwg18MMcIYE4d32WqJFdbYYIsd9jg4vMtWIb6BbxBGBLeIIoY7/QcppZRSSimllFJKKaWusBM8YCV9
+   eJzt1zdWQgEURdH/SxXtMaAI2JuYhxgwz0MFFdM8MKPoPBQx4zzMYlqcKdC819yz1u5ve4NAKaWU8mkMGYxjApOYQhbTjrusWsIyVpBDHqtYw7rfLLOK2MUe9nGAQxzh2HGXVRe4RAVXqOIaN7h13GXVM17wije84wOf+HLcZVU0DIJOdKEbPYihF32h9zqllFLKtxa0og0RtKPDdZFtgxjCMEYwirTrIttmMIs5zGMBi66LbCtgA5vYwjZ2XBfZVsIJTlHGGc5dF9l2h3s84BE1PLkusq2Ob/zgF3/4d11kW5wv2I8EkkhhQP9QKaWUUko1UQM5UDEP
   </data>
  </layer>
  <objectgroup name="obstacles">
@@ -51,23 +51,11 @@
   <object id="395" x="1374" y="6">
    <polygon points="0,0 0,42 46,61 69,37 35,-11"/>
   </object>
-  <object id="406" x="138" y="433">
-   <polygon points="0,0 -3,9 15,42 53,62 87,55 99,40 91,30 79,9 32,-5"/>
-  </object>
-  <object id="407" x="177" y="376">
-   <polygon points="0,0 19,-33 75,-30 79,-13 51,8 14,9"/>
-  </object>
-  <object id="408" x="157" y="416">
-   <polygon points="0,0 16,-25 52,-34 84,-14 74,15 69,27 2,16"/>
-  </object>
-  <object id="409" x="235" y="435">
-   <polygon points="0,0 43,77 67,52 67,24 34,-2 2,-12"/>
-  </object>
   <object id="410" x="500" y="444">
-   <polygon points="0,0 0,260 66,480 160,552 238,548 304,484 288,356 282,222 204,114 148,-4"/>
+   <polygon points="-10,-8 -8,246 66,480 144,560 248,560 304,484 288,356 282,222 204,114 148,-4"/>
   </object>
   <object id="412" x="494" y="436">
-   <polygon points="0,0 168,-204 322,-254 422,-76 224,4"/>
+   <polygon points="0,0 136,-192 322,-254 422,-76 224,4"/>
   </object>
   <object id="413" x="824" y="186">
    <polygon points="0,0 412,-12 360,214 108,208"/>
@@ -76,7 +64,7 @@
    <polygon points="0,0 232,136 132,254 -44,202"/>
   </object>
   <object id="415" x="1374" y="466">
-   <polygon points="0,0 -10,292 -30,448 84,516 144,500 216,404 216,-20 28,-52"/>
+   <polygon points="0,0 -24,296 -34,442 84,516 144,500 216,404 216,-20 28,-52"/>
   </object>
   <object id="419" x="1735" y="246">
    <polygon points="0,0 14,-52 44,-84 100,-64 120,-18 106,20 52,38 2,22"/>
@@ -98,15 +86,6 @@
   </object>
   <object id="428" x="700" y="268">
    <polygon points="0,0 0,-62 96,-94 124,-92 146,-66"/>
-  </object>
-  <object id="429" x="646" y="958">
-   <polygon points="0,0 -8,42 64,54 100,40 88,-10"/>
-  </object>
-  <object id="430" x="494" y="440">
-   <polygon points="0,0 -6,248 36,260 34,12"/>
-  </object>
-  <object id="431" x="1386" y="616">
-   <polygon points="0,0 -34,34 -34,84 8,116"/>
   </object>
   <object id="432" x="62" y="240">
    <polygon points="0,0 26,-34 26,-248 -61,-242 -61,1"/>
