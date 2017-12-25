@@ -10,7 +10,7 @@ public class FunctionSet {
 
         //контрольные значения дистанций
         final float d1 = 70;
-        final float d2 = 115;
+        final float d2 = 110;
 
         //final double d3 = 60;
         //final double d4 = 80;
