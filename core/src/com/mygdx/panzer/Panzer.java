@@ -19,7 +19,7 @@ public class Panzer {
 
     private static final float FRAME_TIME = 0.3f;
     private static final float POWER_RATIO_BOUND = 10f;
-    private static final float TURN_RULE_FREQ = 0.15f;
+    private static final float TURN_RULE_FREQ = 0.12f;
     private static final float DEFAULT_RULE_FREQ = 0.00001f;
     private static final int SENSOR_COUNT = 3;
 
